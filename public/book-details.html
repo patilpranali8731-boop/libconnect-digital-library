@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Book Details | LibConnect</title>
+
+    <link rel="stylesheet"
+          href="CSS/style.css">
+
+</head>
+
+
+<body>
+
+
+<!-- ================= HEADER ================= -->
+
+<header class="main-header">
+
+    <div class="logo">
+        📚 LibConnect
+    </div>
+
+
+    <nav class="navbar">
+
+        <a href="index.html">
+            Home
+        </a>
+
+        <a href="library.html">
+            Digital Library
+        </a>
+
+        <a href="index.html#categories">
+            Categories
+        </a>
+
+        <a href="index.html#about">
+            About
+        </a>
+
+        <a href="index.html#contact">
+            Contact
+        </a>
+
+    </nav>
+
+
+    <div class="header-buttons">
+
+        <a href="login.html"
+           class="login-btn">
+            Login
+        </a>
+
+        <a href="register.html"
+           class="register-btn">
+            Register
+        </a>
+
+    </div>
+
+</header>
+
+
+
+<!-- ================= BOOK DETAILS ================= -->
+
+<section class="book-details-page">
+
+
+    <!-- BACK BUTTON -->
+
+    <a href="library.html"
+       class="back-library-btn">
+
+        ← Back to Digital Library
+
+    </a>
+
+
+
+    <div class="book-details-container">
+
+
+        <!-- ================= BOOK COVER ================= -->
+
+        <div class="book-details-cover">
+
+            <div class="large-book-icon">
+                📘
+            </div>
+
+            <span>
+                DIGITAL RESOURCE
+            </span>
+
+        </div>
+
+
+
+        <!-- ================= BOOK INFORMATION ================= -->
+
+        <div class="book-details-content">
+
+            <span class="details-category" id="bookCategory">
+                Education
+            </span>
+
+
+            <h1 id="bookTitle">
+                Introduction to Computer Science
+            </h1>
+
+
+            <p class="details-author">
+                By <strong id="bookAuthor">
+                    John Smith
+                </strong>
+            </p>
+
+
+            <p class="details-description"
+               id="bookDescription">
+
+                A beginner-friendly resource covering
+                fundamental concepts of computer science,
+                including programming, algorithms,
+                databases and computer fundamentals.
+
+            </p>
+
+
+
+            <!-- BOOK INFORMATION -->
+
+            <div class="book-meta">
+
+
+                <div class="meta-item">
+
+                    <span>
+                        Language
+                    </span>
+
+                    <strong id="bookLanguage">
+                        English
+                    </strong>
+
+                </div>
+
+
+                <div class="meta-item">
+
+                    <span>
+                        Publication Year
+                    </span>
+
+                    <strong id="bookYear">
+                        2025
+                    </strong>
+
+                </div>
+
+
+                <div class="meta-item">
+
+                    <span>
+                        Resource Type
+                    </span>
+
+                    <strong id="bookType">
+                        E-Book
+                    </strong>
+
+                </div>
+
+
+                <div class="meta-item">
+
+                    <span>
+                        Availability
+                    </span>
+
+                    <strong class="available-text">
+                        Available
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- ACTION BUTTONS -->
+
+            <div class="book-details-actions">
+
+
+                <button
+                    class="details-read-btn"
+                    onclick="openPDFReader()">
+
+                    📖 Read Online
+
+                </button>
+
+
+                <button
+                    class="details-bookmark-btn"
+                    id="detailsBookmark"
+                    onclick="toggleDetailsBookmark()">
+
+                    ♡ Bookmark
+
+                </button>
+
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+
+    <!-- ================= PDF READER ================= -->
+
+    <div class="pdf-reader-section"
+         id="pdfReaderSection">
+
+
+        <div class="pdf-reader-header">
+
+            <div>
+
+                <span>
+                    READING MODE
+                </span>
+
+                <h2 id="readerTitle">
+                    Introduction to Computer Science
+                </h2>
+
+            </div>
+
+
+            <button onclick="closePDFReader()">
+                ✕ Close Reader
+            </button>
+
+        </div>
+
+
+
+        <!-- PDF AREA -->
+
+        <div class="pdf-viewer">
+
+            <iframe
+                id="pdfFrame"
+                src=""
+                width="100%"
+                height="700"
+                style="border: none;">
+            </iframe>
+
+        </div>
+
+        </div>
+
+    </div>
+
+
+</section>
+
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer class="main-footer">
+
+    <div class="footer-content">
+
+
+        <div>
+
+            <h3>
+                📚 LibConnect
+            </h3>
+
+            <p>
+                Connecting communities with knowledge
+                through digital learning resources.
+            </p>
+
+        </div>
+
+
+        <div>
+
+            <h4>
+                Quick Links
+            </h4>
+
+            <a href="index.html">
+                Home
+            </a>
+
+            <a href="library.html">
+                Digital Library
+            </a>
+
+            <a href="login.html">
+                Login
+            </a>
+
+            <a href="register.html">
+                Register
+            </a>
+
+        </div>
+
+
+        <div>
+
+            <h4>
+                Community
+            </h4>
+
+            <a href="#">
+                Community Centres
+            </a>
+
+            <a href="#">
+                Local Knowledge
+            </a>
+
+            <a href="#">
+                Events
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <div class="footer-bottom">
+
+        <p>
+            © 2026 LibConnect. All Rights Reserved.
+        </p>
+
+    </div>
+
+</footer>
+
+
+
+<script src="JS/script.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Community Centre | LibConnect</title>
+
+    <link rel="stylesheet"
+          href="CSS/style.css">
+
+</head>
+
+<body>
+
+
+<!-- ================= HEADER ================= -->
+
+<header class="dashboard-header">
+
+    <div class="logo">
+        📚 LibConnect
+    </div>
+
+    <nav class="main-nav">
+
+        <a href="index.html">
+            Home
+        </a>
+
+        <a href="library.html">
+            Digital Library
+        </a>
+
+        <a href="community-centre.html"
+           class="active">
+            Community Centre
+        </a>
+
+        <a href="dashboard.html">
+            Dashboard
+        </a>
+
+    </nav>
+
+    <div class="dashboard-header-right">
+
+        <span class="user-greeting">
+            Community
+        </span>
+
+        <button
+            class="dashboard-logout"
+            onclick="logoutUser()">
+
+            Logout
+
+        </button>
+
+    </div>
+
+</header>
+
+
+
+<!-- ================= MAIN ================= -->
+
+<main class="community-page">
+
+
+    <!-- ================= HERO ================= -->
+
+    <section class="community-hero">
+
+        <div>
+
+            <p class="dashboard-small-title">
+                COMMUNITY CENTRE
+            </p>
+
+            <h1>
+                Your Local Learning Space 🏢
+            </h1>
+
+            <p>
+                Discover community centres, digital library
+                facilities, learning programs and local
+                educational resources.
+            </p>
+
+        </div>
+
+        <div class="community-hero-icon">
+            🏫
+        </div>
+
+    </section>
+
+
+
+    <!-- ================= CENTRES ================= -->
+
+    <section class="community-section">
+
+        <div class="dashboard-section-heading">
+
+            <div>
+
+                <p class="dashboard-small-title">
+                    OUR CENTRES
+                </p>
+
+                <h2>
+                    Community Centres
+                </h2>
+
+            </div>
+
+        </div>
+
+
+        <div class="centre-grid">
+
+
+            <!-- CENTRE 1 -->
+
+            <div class="centre-card">
+
+                <div class="centre-icon">
+                    🏢
+                </div>
+
+                <h3>
+                    Community Centre A
+                </h3>
+
+                <p class="centre-location">
+                    📍 Main Road
+                </p>
+
+                <p>
+                    A community learning centre providing
+                    digital library access, study space and
+                    educational resources.
+                </p>
+
+                <div class="centre-info">
+
+                    <span>
+                        🕘 9:00 AM - 7:00 PM
+                    </span>
+
+                    <span>
+                        📚 Digital Library
+                    </span>
+
+                </div>
+
+                <button
+                    onclick="viewCentre('Community Centre A')">
+
+                    View Centre
+
+                </button>
+
+            </div>
+
+
+
+            <!-- CENTRE 2 -->
+
+            <div class="centre-card">
+
+                <div class="centre-icon">
+                    🏢
+                </div>
+
+                <h3>
+                    Community Centre B
+                </h3>
+
+                <p class="centre-location">
+                    📍 Station Road
+                </p>
+
+                <p>
+                    Provides access to educational books,
+                    career resources, computers and
+                    community learning programs.
+                </p>
+
+                <div class="centre-info">
+
+                    <span>
+                        🕘 10:00 AM - 6:00 PM
+                    </span>
+
+                    <span>
+                        💻 Computer Lab
+                    </span>
+
+                </div>
+
+                <button
+                    onclick="viewCentre('Community Centre B')">
+
+                    View Centre
+
+                </button>
+
+            </div>
+
+
+
+            <!-- CENTRE 3 -->
+
+            <div class="centre-card">
+
+                <div class="centre-icon">
+                    🏢
+                </div>
+
+                <h3>
+                    Community Centre C
+                </h3>
+
+                <p class="centre-location">
+                    📍 Village Road
+                </p>
+
+                <p>
+                    Supports students and local residents
+                    through digital learning materials,
+                    workshops and local resources.
+                </p>
+
+                <div class="centre-info">
+
+                    <span>
+                        🕘 9:30 AM - 6:30 PM
+                    </span>
+
+                    <span>
+                        📖 Reading Room
+                    </span>
+
+                </div>
+
+                <button
+                    onclick="viewCentre('Community Centre C')">
+
+                    View Centre
+
+                </button>
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ================= FACILITIES ================= -->
+
+    <section class="community-section">
+
+        <div class="dashboard-section-heading">
+
+            <div>
+
+                <p class="dashboard-small-title">
+                    FACILITIES
+                </p>
+
+                <h2>
+                    Available Facilities
+                </h2>
+
+            </div>
+
+        </div>
+
+
+        <div class="facility-grid">
+
+
+            <div class="facility-card">
+
+                <span>
+                    📚
+                </span>
+
+                <h3>
+                    Digital Library
+                </h3>
+
+                <p>
+                    Access educational books,
+                    notes and digital resources.
+                </p>
+
+            </div>
+
+
+            <div class="facility-card">
+
+                <span>
+                    💻
+                </span>
+
+                <h3>
+                    Computer Access
+                </h3>
+
+                <p>
+                    Use computers for learning,
+                    research and digital education.
+                </p>
+
+            </div>
+
+
+            <div class="facility-card">
+
+                <span>
+                    📖
+                </span>
+
+                <h3>
+                    Reading Room
+                </h3>
+
+                <p>
+                    A quiet space for reading
+                    and self-study.
+                </p>
+
+            </div>
+
+
+            <div class="facility-card">
+
+                <span>
+                    🎓
+                </span>
+
+                <h3>
+                    Workshops
+                </h3>
+
+                <p>
+                    Educational and career
+                    development workshops.
+                </p>
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ================= LOCAL KNOWLEDGE ================= -->
+
+    <section
+        class="community-section"
+        id="local-knowledge">
+
+
+        <div class="dashboard-section-heading">
+
+            <div>
+
+                <p class="dashboard-small-title">
+                    LOCAL KNOWLEDGE
+                </p>
+
+                <h2>
+                    Learn From Your Community
+                </h2>
+
+            </div>
+
+        </div>
+
+
+        <div class="local-knowledge-grid">
+
+
+            <!-- LOCAL HISTORY -->
+
+            <div class="local-card">
+
+                <div class="local-card-icon">
+                    🏛️
+                </div>
+
+                <h3>
+                    Local History
+                </h3>
+
+                <p>
+                    Explore the history, traditions and
+                    important places of your local area.
+                </p>
+
+                <button
+                    onclick="openLocalCategory('Local History')">
+
+                    Explore
+
+                </button>
+
+            </div>
+
+
+
+            <!-- LOCAL LANGUAGE -->
+
+            <div class="local-card">
+
+                <div class="local-card-icon">
+                    🗣️
+                </div>
+
+                <h3>
+                    Local Language Books
+                </h3>
+
+                <p>
+                    Discover books and educational material
+                    available in local languages.
+                </p>
+
+                <button
+                    onclick="openLocalCategory('Local Language Books')">
+
+                    Explore
+
+                </button>
+
+            </div>
+
+
+
+            <!-- COMMUNITY NOTICES -->
+
+            <div class="local-card">
+
+                <div class="local-card-icon">
+                    📢
+                </div>
+
+                <h3>
+                    Community Notices
+                </h3>
+
+                <p>
+                    Important educational events,
+                    announcements and community information.
+                </p>
+
+                <button
+                    onclick="openLocalCategory('Community Notices')">
+
+                    Explore
+
+                </button>
+
+            </div>
+
+
+
+            <!-- GOVERNMENT INFORMATION -->
+
+            <div class="local-card">
+
+                <div class="local-card-icon">
+                    🏛️
+                </div>
+
+                <h3>
+                    Government Information
+                </h3>
+
+                <p>
+                    Educational information about public
+                    programs and government schemes.
+                </p>
+
+                <button
+                    onclick="openLocalCategory('Government Information')">
+
+                    Explore
+
+                </button>
+
+            </div>
+
+
+
+            <!-- LOCAL AUTHORS -->
+
+            <div class="local-card">
+
+                <div class="local-card-icon">
+                    ✍️
+                </div>
+
+                <h3>
+                    Local Authors
+                </h3>
+
+                <p>
+                    Discover publications and learning
+                    resources created by local authors.
+                </p>
+
+                <button
+                    onclick="openLocalCategory('Local Authors')">
+
+                    Explore
+
+                </button>
+
+            </div>
+
+
+
+            <!-- AGRICULTURE -->
+
+            <div class="local-card">
+
+                <div class="local-card-icon">
+                    🌾
+                </div>
+
+                <h3>
+                    Local Agriculture
+                </h3>
+
+                <p>
+                    Find educational material related to
+                    farming, agriculture and rural development.
+                </p>
+
+                <button
+                    onclick="openLocalCategory('Local Agriculture')">
+
+                    Explore
+
+                </button>
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+</main>
+
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer class="site-footer">
+
+    <div class="footer-content">
+
+        <div>
+
+            <h3>
+                📚 LibConnect
+            </h3>
+
+            <p>
+                Connecting communities with knowledge.
+            </p>
+
+        </div>
+
+        <div>
+
+            <p>
+                Community Digital Library
+            </p>
+
+            <p>
+                © 2026 LibConnect
+            </p>
+
+        </div>
+
+    </div>
+
+</footer>
+
+
+
+<script src="JS/script.js"></script>
+
+</body>
+
+</html>

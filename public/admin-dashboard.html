@@ -1,0 +1,994 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Admin Dashboard | LibConnect</title>
+
+    <link rel="stylesheet"
+          href="CSS/style.css">
+
+</head>
+
+
+<body>
+
+
+<!-- ================= HEADER ================= -->
+
+<header class="dashboard-header">
+
+    <div class="logo">
+        📚 LibConnect
+    </div>
+
+
+    <div class="dashboard-header-right">
+
+        <span class="user-greeting">
+            Admin
+        </span>
+
+        <button
+            class="dashboard-logout"
+            onclick="logoutUser()">
+
+            Logout
+
+        </button>
+
+    </div>
+
+</header>
+
+
+
+<!-- ================= ADMIN DASHBOARD ================= -->
+
+<main class="admin-page">
+
+
+    <!-- ================= WELCOME ================= -->
+
+    <section class="admin-welcome">
+
+        <div>
+
+            <p class="dashboard-small-title">
+                ADMIN DASHBOARD
+            </p>
+
+            <h1>
+                Welcome, Administrator 👋
+            </h1>
+
+            <p>
+                Manage users, librarians, resources and
+                community library activities from one place.
+            </p>
+
+        </div>
+
+
+        <div class="admin-welcome-icon">
+            🛡️
+        </div>
+
+    </section>
+
+
+
+    <!-- ================= STATISTICS ================= -->
+
+    <section class="admin-stats">
+
+
+        <div class="admin-stat-card">
+
+            <div class="admin-stat-icon">
+                👥
+            </div>
+
+            <div>
+
+                <span>
+                    Total Members
+                </span>
+
+                <strong id="totalMembers">
+                    0
+                </strong>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="admin-stat-card">
+
+            <div class="admin-stat-icon">
+                👨‍💼
+            </div>
+
+            <div>
+
+                <span>
+                    Librarians
+                </span>
+
+                <strong id="totalLibrarians">
+                    0
+                </strong>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="admin-stat-card">
+
+            <div class="admin-stat-icon">
+                📚
+            </div>
+
+            <div>
+
+                <span>
+                    Resources
+                </span>
+
+                <strong id="totalResources">
+                    0
+                </strong>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="admin-stat-card">
+
+            <div class="admin-stat-icon">
+                🏢
+            </div>
+
+            <div>
+
+                <span>
+                    Community Centres
+                </span>
+
+                <strong>
+                    4
+                </strong>
+
+            </div>
+
+        </div>
+
+
+    </section>
+
+
+
+    <!-- ================= QUICK ACTIONS ================= -->
+
+    <section class="admin-section">
+
+
+        <div class="dashboard-section-heading">
+
+            <div>
+
+                <p class="dashboard-small-title">
+                    SYSTEM MANAGEMENT
+                </p>
+
+                <h2>
+                    Quick Actions
+                </h2>
+
+            </div>
+
+        </div>
+
+
+        <div class="admin-actions">
+
+
+            <!-- MANAGE USERS -->
+
+            <button
+                class="admin-action-card"
+                onclick="scrollToAdminSection('users')">
+
+                <div class="admin-action-icon">
+                    👥
+                </div>
+
+                <div>
+
+                    <h3>
+                        Manage Users
+                    </h3>
+
+                    <p>
+                        View and manage registered
+                        library members.
+                    </p>
+
+                </div>
+
+                <span>
+                    →
+                </span>
+
+            </button>
+
+
+
+            <!-- MANAGE LIBRARIANS -->
+
+            <button
+                class="admin-action-card"
+                onclick="scrollToAdminSection('librarians')">
+
+                <div class="admin-action-icon">
+                    👨‍💼
+                </div>
+
+                <div>
+
+                    <h3>
+                        Manage Librarians
+                    </h3>
+
+                    <p>
+                        Create and manage librarian
+                        accounts.
+                    </p>
+
+                </div>
+
+                <span>
+                    →
+                </span>
+
+            </button>
+
+
+
+            <!-- MANAGE RESOURCES -->
+
+            <button
+                class="admin-action-card"
+                onclick="scrollToAdminSection('admin-resources')">
+
+                <div class="admin-action-icon">
+                    📚
+                </div>
+
+                <div>
+
+                    <h3>
+                        Manage Resources
+                    </h3>
+
+                    <p>
+                        Monitor digital library
+                        resources.
+                    </p>
+
+                </div>
+
+                <span>
+                    →
+                </span>
+
+            </button>
+
+
+
+            <!-- REPORTS -->
+
+            <button
+                class="admin-action-card"
+                onclick="scrollToAdminSection('reports')">
+
+                <div class="admin-action-icon">
+                    📊
+                </div>
+
+                <div>
+
+                    <h3>
+                        Reports
+                    </h3>
+
+                    <p>
+                        View library usage and
+                        activity reports.
+                    </p>
+
+                </div>
+
+                <span>
+                    →
+                </span>
+
+            </button>
+
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ================= USERS ================= -->
+
+    <section
+        class="admin-section"
+        id="users">
+
+
+        <div class="dashboard-section-heading">
+
+            <div>
+
+                <p class="dashboard-small-title">
+                    USER MANAGEMENT
+                </p>
+
+                <h2>
+                    Registered Members
+                </h2>
+
+            </div>
+
+        </div>
+
+
+        <div class="admin-table-container">
+
+            <table class="admin-table">
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            Member
+                        </th>
+
+                        <th>
+                            Email
+                        </th>
+
+                        <th>
+                            Community Centre
+                        </th>
+
+                        <th>
+                            Status
+                        </th>
+
+                        <th>
+                            Action
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+
+                    <tr>
+
+                        <td>
+                            Rahul Patil
+                        </td>
+
+                        <td>
+                            rahul@example.com
+                        </td>
+
+                        <td>
+                            Community Centre A
+                        </td>
+
+                        <td>
+                            <span class="admin-status active">
+                                Active
+                            </span>
+                        </td>
+
+                        <td>
+
+                            <button
+                                class="admin-view-btn"
+                                onclick="viewAdminUser('Rahul Patil')">
+
+                                View
+
+                            </button>
+
+                        </td>
+
+                    </tr>
+
+
+
+                    <tr>
+
+                        <td>
+                            Sneha Sharma
+                        </td>
+
+                        <td>
+                            sneha@example.com
+                        </td>
+
+                        <td>
+                            Community Centre B
+                        </td>
+
+                        <td>
+                            <span class="admin-status active">
+                                Active
+                            </span>
+                        </td>
+
+                        <td>
+
+                            <button
+                                class="admin-view-btn"
+                                onclick="viewAdminUser('Sneha Sharma')">
+
+                                View
+
+                            </button>
+
+                        </td>
+
+                    </tr>
+
+
+
+                    <tr>
+
+                        <td>
+                            Amit Joshi
+                        </td>
+
+                        <td>
+                            amit@example.com
+                        </td>
+
+                        <td>
+                            Community Centre A
+                        </td>
+
+                        <td>
+                            <span class="admin-status inactive">
+                                Inactive
+                            </span>
+                        </td>
+
+                        <td>
+
+                            <button
+                                class="admin-view-btn"
+                                onclick="viewAdminUser('Amit Joshi')">
+
+                                View
+
+                            </button>
+
+                        </td>
+
+                    </tr>
+
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ================= LIBRARIANS ================= -->
+
+    <section
+        class="admin-section"
+        id="librarians">
+
+
+        <div class="dashboard-section-heading">
+
+            <div>
+
+                <p class="dashboard-small-title">
+                    STAFF MANAGEMENT
+                </p>
+
+                <h2>
+                    Librarians
+                </h2>
+
+            </div>
+
+
+            <button
+                class="admin-primary-btn"
+                onclick="openCreateLibrarian()">
+
+                + Create Librarian
+
+            </button>
+
+        </div>
+
+
+        <div class="admin-table-container">
+
+            <table class="admin-table">
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            Librarian
+                        </th>
+
+                        <th>
+                            Email
+                        </th>
+
+                        <th>
+                            Assigned Centre
+                        </th>
+
+                        <th>
+                            Status
+                        </th>
+
+                        <th>
+                            Action
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+
+                    <tr>
+
+                        <td>
+                            Priya Shah
+                        </td>
+
+                        <td>
+                            priya@example.com
+                        </td>
+
+                        <td>
+                            Community Centre A
+                        </td>
+
+                        <td>
+                            <span class="admin-status active">
+                                Active
+                            </span>
+                        </td>
+
+                        <td>
+
+                            <button
+                                class="admin-view-btn"
+                                onclick="editLibrarian('Priya Shah')">
+
+                                Edit
+
+                            </button>
+
+                        </td>
+
+                    </tr>
+
+
+
+                    <tr>
+
+                        <td>
+                            Rohan Kulkarni
+                        </td>
+
+                        <td>
+                            rohan@example.com
+                        </td>
+
+                        <td>
+                            Community Centre B
+                        </td>
+
+                        <td>
+                            <span class="admin-status active">
+                                Active
+                            </span>
+                        </td>
+
+                        <td>
+
+                            <button
+                                class="admin-view-btn"
+                                onclick="editLibrarian('Rohan Kulkarni')">
+
+                                Edit
+
+                            </button>
+
+                        </td>
+
+                    </tr>
+
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ================= RESOURCES ================= -->
+
+    <section
+        class="admin-section"
+        id="admin-resources">
+
+
+        <div class="dashboard-section-heading">
+
+            <div>
+
+                <p class="dashboard-small-title">
+                    DIGITAL LIBRARY
+                </p>
+
+                <h2>
+                    Resource Overview
+                </h2>
+
+            </div>
+
+        </div>
+
+
+        <div class="admin-resource-overview">
+
+
+            <div class="admin-resource-card">
+
+                <span>
+                    📚
+                </span>
+
+                <strong>
+                    156
+                </strong>
+
+                <p>
+                    Total Resources
+                </p>
+
+            </div>
+
+
+            <div class="admin-resource-card">
+
+                <span>
+                    📥
+                </span>
+
+                <strong>
+                    428
+                </strong>
+
+                <p>
+                    Total Downloads
+                </p>
+
+            </div>
+
+
+            <div class="admin-resource-card">
+
+                <span>
+                    🔖
+                </span>
+
+                <strong>
+                    312
+                </strong>
+
+                <p>
+                    Bookmarks
+                </p>
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ================= REPORTS ================= -->
+
+    <section
+        class="admin-section"
+        id="reports">
+
+
+        <div class="dashboard-section-heading">
+
+            <div>
+
+                <p class="dashboard-small-title">
+                    ANALYTICS
+                </p>
+
+                <h2>
+                    Library Reports
+                </h2>
+
+            </div>
+
+        </div>
+
+
+        <div class="admin-report-grid">
+
+
+            <div class="admin-report-card">
+
+                <span>
+                    📈
+                </span>
+
+                <h3>
+                    Most Viewed Resource
+                </h3>
+
+                <strong>
+                    Introduction to Computer Science
+                </strong>
+
+            </div>
+
+
+
+            <div class="admin-report-card">
+
+                <span>
+                    ⬇️
+                </span>
+
+                <h3>
+                    Most Downloaded
+                </h3>
+
+                <strong>
+                    Cyber Security Fundamentals
+                </strong>
+
+            </div>
+
+
+
+            <div class="admin-report-card">
+
+                <span>
+                    👥
+                </span>
+
+                <h3>
+                    Active Members
+                </h3>
+
+                <strong>
+                    72 Members
+                </strong>
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+</main>
+
+
+
+<!-- ================= CREATE LIBRARIAN MODAL ================= -->
+
+<div
+    class="admin-modal"
+    id="createLibrarianModal">
+
+
+    <div class="admin-modal-content">
+
+
+        <div class="modal-heading">
+
+            <div>
+
+                <p class="dashboard-small-title">
+                    STAFF MANAGEMENT
+                </p>
+
+                <h2>
+                    Create Librarian Account
+                </h2>
+
+            </div>
+
+
+            <button
+                onclick="closeCreateLibrarian()">
+
+                ✕
+
+            </button>
+
+        </div>
+
+
+        <form id="createLibrarianForm">
+
+
+            <div class="modal-form-grid">
+
+
+                <div class="modal-form-group">
+
+                    <label>
+                        Full Name
+                    </label>
+
+                    <input
+                        type="text"
+                        id="librarianName"
+                        placeholder="Enter full name"
+                        required>
+
+                </div>
+
+
+
+                <div class="modal-form-group">
+
+                    <label>
+                        Email
+                    </label>
+
+                    <input
+                        type="email"
+                        id="librarianEmail"
+                        placeholder="Enter email"
+                        required>
+
+                </div>
+
+
+
+                <div class="modal-form-group">
+
+                    <label>
+                        Password
+                    </label>
+
+                    <input
+                        type="password"
+                        id="librarianPassword"
+                        placeholder="Create password"
+                        required>
+
+                </div>
+
+
+
+                <div class="modal-form-group">
+
+                    <label>
+                        Community Centre
+                    </label>
+
+                    <select
+                        id="librarianCentre"
+                        required>
+
+                        <option value="">
+                            Select Centre
+                        </option>
+
+                        <option>
+                            Community Centre A
+                        </option>
+
+                        <option>
+                            Community Centre B
+                        </option>
+
+                        <option>
+                            Community Centre C
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+            </div>
+
+
+            <div class="modal-form-actions">
+
+                <button
+                    type="submit"
+                    class="admin-primary-btn">
+
+                    Create Librarian
+
+                </button>
+
+
+                <button
+                    type="button"
+                    class="admin-secondary-btn"
+                    onclick="closeCreateLibrarian()">
+
+                    Cancel
+
+                </button>
+
+            </div>
+
+
+        </form>
+
+    </div>
+
+</div>
+
+
+
+<script src="JS/script.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Member Dashboard | LibConnect</title>
+
+    <link rel="stylesheet"
+          href="CSS/style.css">
+
+</head>
+
+
+<body>
+
+
+<!-- ================= HEADER ================= -->
+
+<header class="dashboard-header">
+
+    <div class="logo">
+        📚 LibConnect
+    </div>
+
+
+    <div class="dashboard-header-right">
+
+        <span class="user-greeting">
+            Welcome, Member
+        </span>
+
+        <button
+            class="dashboard-logout"
+            onclick="logoutUser()">
+
+            Logout
+
+        </button>
+
+    </div>
+
+</header>
+
+
+
+<!-- ================= DASHBOARD ================= -->
+
+<main class="dashboard-page">
+
+
+    <!-- ================= WELCOME ================= -->
+
+    <section class="dashboard-welcome">
+
+        <div>
+
+            <p class="dashboard-small-title">
+                MEMBER DASHBOARD
+            </p>
+
+            <h1>
+                Welcome back, <span>Student!</span> 👋
+            </h1>
+
+            <p>
+                Continue exploring knowledge and
+                learning resources from your community
+                digital library.
+            </p>
+
+        </div>
+
+
+        <div class="welcome-icon">
+            📚
+        </div>
+
+    </section>
+
+
+
+    <!-- ================= STATISTICS ================= -->
+
+    <section class="dashboard-stats">
+
+
+        <div class="dashboard-stat-card">
+
+            <div class="stat-icon">
+                ♡
+            </div>
+
+            <div>
+
+                <span>
+                    My Bookmarks
+                </span>
+
+                <strong>
+                    12
+                </strong>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="dashboard-stat-card">
+
+            <div class="stat-icon">
+                📖
+            </div>
+
+            <div>
+
+                <span>
+                    Read History
+                </span>
+
+                <strong>
+                    8
+                </strong>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="dashboard-stat-card">
+
+            <div class="stat-icon">
+                ⬇️
+            </div>
+
+            <div>
+
+                <span>
+                    Downloads
+                </span>
+
+                <strong>
+                    5
+                </strong>
+
+            </div>
+
+        </div>
+
+
+    </section>
+
+
+
+    <!-- ================= QUICK ACTIONS ================= -->
+
+    <section class="dashboard-section">
+
+        <div class="dashboard-section-heading">
+
+            <div>
+
+                <p class="dashboard-small-title">
+                    GET STARTED
+                </p>
+
+                <h2>
+                    Quick Actions
+                </h2>
+
+            </div>
+
+        </div>
+
+
+        <div class="quick-actions">
+
+
+            <a href="library.html"
+               class="quick-action-card">
+
+                <div class="quick-action-icon">
+                    🔎
+                </div>
+
+                <div>
+
+                    <h3>
+                        Browse Library
+                    </h3>
+
+                    <p>
+                        Explore books, notes and
+                        digital resources.
+                    </p>
+
+                </div>
+
+                <span>
+                    →
+                </span>
+
+            </a>
+
+
+
+            <a href="#bookmarks"
+               class="quick-action-card">
+
+                <div class="quick-action-icon">
+                    ♡
+                </div>
+
+                <div>
+
+                    <h3>
+                        My Bookmarks
+                    </h3>
+
+                    <p>
+                        View the resources you saved
+                        for later.
+                    </p>
+
+                </div>
+
+                <span>
+                    →
+                </span>
+
+            </a>
+
+
+
+            <a href="#history"
+               class="quick-action-card">
+
+                <div class="quick-action-icon">
+                    🕐
+                </div>
+
+                <div>
+
+                    <h3>
+                        Reading History
+                    </h3>
+
+                    <p>
+                        Continue reading your
+                        recently viewed resources.
+                    </p>
+
+                </div>
+
+                <span>
+                    →
+                </span>
+
+            </a>
+
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ================= RECENTLY VIEWED ================= -->
+
+    <section class="dashboard-section"
+             id="history">
+
+
+        <div class="dashboard-section-heading">
+
+            <div>
+
+                <p class="dashboard-small-title">
+                    YOUR ACTIVITY
+                </p>
+
+                <h2>
+                    Recently Viewed
+                </h2>
+
+            </div>
+
+            <a href="library.html"
+               class="view-all-link">
+
+                View Library →
+
+            </a>
+
+        </div>
+
+
+
+        <div class="dashboard-book-list">
+
+
+            <!-- BOOK 1 -->
+
+            <div class="dashboard-book-item">
+
+                <div class="dashboard-book-cover">
+                    📘
+                </div>
+
+                <div class="dashboard-book-info">
+
+                    <span>
+                        Education
+                    </span>
+
+                    <h3>
+                        Introduction to Computer Science
+                    </h3>
+
+                    <p>
+                        By John Smith
+                    </p>
+
+                </div>
+
+                <a href="book-details.html"
+                   class="dashboard-read-btn">
+
+                    Read
+
+                </a>
+
+            </div>
+
+
+
+            <!-- BOOK 2 -->
+
+            <div class="dashboard-book-item">
+
+                <div class="dashboard-book-cover cyber-small">
+                    🔐
+                </div>
+
+                <div class="dashboard-book-info">
+
+                    <span>
+                        Cybersecurity
+                    </span>
+
+                    <h3>
+                        Cyber Security Fundamentals
+                    </h3>
+
+                    <p>
+                        By Michael Brown
+                    </p>
+
+                </div>
+
+                <a href="book-details.html"
+                   class="dashboard-read-btn">
+
+                    Read
+
+                </a>
+
+            </div>
+
+
+
+            <!-- BOOK 3 -->
+
+            <div class="dashboard-book-item">
+
+                <div class="dashboard-book-cover career-small">
+                    💼
+                </div>
+
+                <div class="dashboard-book-info">
+
+                    <span>
+                        Career & Jobs
+                    </span>
+
+                    <h3>
+                        Career Guidance for Students
+                    </h3>
+
+                    <p>
+                        By Community Learning Centre
+                    </p>
+
+                </div>
+
+                <a href="book-details.html"
+                   class="dashboard-read-btn">
+
+                    Read
+
+                </a>
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ================= BOOKMARKS ================= -->
+
+    <section class="dashboard-section"
+             id="bookmarks">
+
+
+        <div class="dashboard-section-heading">
+
+            <div>
+
+                <p class="dashboard-small-title">
+                    SAVED RESOURCES
+                </p>
+
+                <h2>
+                    My Bookmarks
+                </h2>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="bookmark-grid">
+
+
+            <!-- BOOKMARK 1 -->
+
+            <div class="dashboard-bookmark-card">
+
+                <div class="bookmark-card-cover">
+                    💼
+                </div>
+
+                <div class="bookmark-card-content">
+
+                    <span>
+                        Career & Jobs
+                    </span>
+
+                    <h3>
+                        Career Guidance for Students
+                    </h3>
+
+                    <p>
+                        By Community Learning Centre
+                    </p>
+
+                    <a href="book-details.html">
+                        Read Resource →
+                    </a>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- BOOKMARK 2 -->
+
+            <div class="dashboard-bookmark-card">
+
+                <div class="bookmark-card-cover marathi-small">
+                    📕
+                </div>
+
+                <div class="bookmark-card-content">
+
+                    <span>
+                        Education
+                    </span>
+
+                    <h3>
+                        महाराष्ट्राचा इतिहास
+                    </h3>
+
+                    <p>
+                        By Local Knowledge Centre
+                    </p>
+
+                    <a href="book-details.html">
+                        Read Resource →
+                    </a>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- BOOKMARK 3 -->
+
+            <div class="dashboard-bookmark-card">
+
+                <div class="bookmark-card-cover agriculture-small">
+                    🌱
+                </div>
+
+                <div class="bookmark-card-content">
+
+                    <span>
+                        Agriculture
+                    </span>
+
+                    <h3>
+                        Modern Agriculture Guide
+                    </h3>
+
+                    <p>
+                        By Agriculture Resource Centre
+                    </p>
+
+                    <a href="book-details.html">
+                        Read Resource →
+                    </a>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+</main>
+
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer class="main-footer">
+
+    <div class="footer-content">
+
+
+        <div>
+
+            <h3>
+                📚 LibConnect
+            </h3>
+
+            <p>
+                Connecting communities with knowledge
+                through digital learning resources.
+            </p>
+
+        </div>
+
+
+        <div>
+
+            <h4>
+                Quick Links
+            </h4>
+
+            <a href="index.html">
+                Home
+            </a>
+
+            <a href="library.html">
+                Digital Library
+            </a>
+
+            <a href="dashboard.html">
+                Dashboard
+            </a>
+
+        </div>
+
+
+        <div>
+
+            <h4>
+                Community
+            </h4>
+
+            <a href="#">
+                Community Centres
+            </a>
+
+            <a href="#">
+                Local Knowledge
+            </a>
+
+            <a href="#">
+                Events
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <div class="footer-bottom">
+
+        <p>
+            © 2026 LibConnect. All Rights Reserved.
+        </p>
+
+    </div>
+
+</footer>
+
+
+
+<script src="JS/script.js"></script>
+
+</body>
+
+</html>

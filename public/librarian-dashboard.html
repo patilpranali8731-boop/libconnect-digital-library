@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Librarian Dashboard | LibConnect</title>
+
+    <link rel="stylesheet"
+          href="CSS/style.css">
+
+</head>
+
+
+<body>
+
+
+<!-- ================= HEADER ================= -->
+
+<header class="dashboard-header">
+
+    <div class="logo">
+        📚 LibConnect
+    </div>
+
+
+    <div class="dashboard-header-right">
+
+        <span class="user-greeting">
+            Librarian
+        </span>
+
+        <button
+            class="dashboard-logout"
+            onclick="logoutUser()">
+
+            Logout
+
+        </button>
+
+    </div>
+
+</header>
+
+
+
+<!-- ================= LIBRARIAN DASHBOARD ================= -->
+
+<main class="librarian-page">
+
+
+    <!-- ================= WELCOME ================= -->
+
+    <section class="librarian-welcome">
+
+        <div>
+
+            <p class="dashboard-small-title">
+                LIBRARIAN DASHBOARD
+            </p>
+
+            <h1>
+                Manage Your Digital Library 📚
+            </h1>
+
+            <p>
+                Add, organize and manage digital
+                learning resources for your community.
+            </p>
+
+        </div>
+
+
+        <div class="librarian-welcome-icon">
+            📚
+        </div>
+
+    </section>
+
+
+
+    <!-- ================= STATISTICS ================= -->
+
+    <section class="librarian-stats">
+
+
+        <div class="librarian-stat-card">
+
+            <div class="librarian-stat-icon">
+                📚
+            </div>
+
+            <div>
+
+                <span>
+                    Total Resources
+                </span>
+
+                <strong id="librarianTotalResources">
+                    0
+                </strong>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="librarian-stat-card">
+
+            <div class="librarian-stat-icon">
+                📂
+            </div>
+
+            <div>
+
+                <span>
+                    Categories
+                </span>
+
+                <strong>
+                    10
+                </strong>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="librarian-stat-card">
+
+            <div class="librarian-stat-icon">
+                ⬇️
+            </div>
+
+            <div>
+
+                <span>
+                    Downloads
+                </span>
+
+                <strong>
+                    428
+                </strong>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="librarian-stat-card">
+
+            <div class="librarian-stat-icon">
+                👥
+            </div>
+
+            <div>
+
+                <span>
+                    Members
+                </span>
+
+                <strong>
+                    85
+                </strong>
+
+            </div>
+
+        </div>
+
+
+    </section>
+
+
+
+    <!-- ================= ACTIONS ================= -->
+
+    <section class="librarian-section">
+
+
+        <div class="dashboard-section-heading">
+
+            <div>
+
+                <p class="dashboard-small-title">
+                    LIBRARY MANAGEMENT
+                </p>
+
+                <h2>
+                    Quick Actions
+                </h2>
+
+            </div>
+
+        </div>
+
+
+        <div class="librarian-actions">
+
+
+            <button
+                class="librarian-action-card"
+                onclick="openAddResource()">
+
+                <div class="librarian-action-icon">
+                    +
+                </div>
+
+                <div>
+
+                    <h3>
+                        Add Resource
+                    </h3>
+
+                    <p>
+                        Add a new book or learning
+                        material to the library.
+                    </p>
+
+                </div>
+
+                <span>
+                    →
+                </span>
+
+            </button>
+
+
+
+            <button
+                class="librarian-action-card"
+                onclick="scrollToResources()">
+
+                <div class="librarian-action-icon">
+                    📚
+                </div>
+
+                <div>
+
+                    <h3>
+                        Manage Resources
+                    </h3>
+
+                    <p>
+                        View and manage existing
+                        library resources.
+                    </p>
+
+                </div>
+
+                <span>
+                    →
+                </span>
+
+            </button>
+
+
+
+            <button
+                class="librarian-action-card"
+                onclick="openUploadResource()">
+
+                <div class="librarian-action-icon">
+                    📄
+                </div>
+
+                <div>
+
+                    <h3>
+                        Upload PDF
+                    </h3>
+
+                    <p>
+                        Upload a PDF learning
+                        resource.
+                    </p>
+
+                </div>
+
+                <span>
+                    →
+                </span>
+
+            </button>
+
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ================= RESOURCE MANAGEMENT ================= -->
+
+    <section class="librarian-section"
+             id="resources">
+
+
+        <div class="dashboard-section-heading">
+
+            <div>
+
+                <p class="dashboard-small-title">
+                    DIGITAL LIBRARY
+                </p>
+
+                <h2>
+                    Manage Resources
+                </h2>
+
+            </div>
+
+
+            <button
+                class="add-resource-top-btn"
+                onclick="openAddResource()">
+
+                + Add Resource
+
+            </button>
+
+        </div>
+
+
+
+        <!-- SEARCH -->
+
+        <div class="librarian-search">
+
+            <input
+                type="text"
+                id="librarianSearch"
+                placeholder="Search resources...">
+
+            <select id="librarianCategory">
+
+                <option value="all">
+                    All Categories
+                </option>
+
+                <option value="education">
+                    Education
+                </option>
+
+                <option value="technology">
+                    Technology
+                </option>
+
+                <option value="cybersecurity">
+                    Cybersecurity
+                </option>
+
+                <option value="career">
+                    Career & Jobs
+                </option>
+
+                <option value="agriculture">
+                    Agriculture
+                </option>
+
+            </select>
+
+            <button onclick="filterLibrarianResources()">
+                Search
+            </button>
+
+        </div>
+
+
+
+        <!-- RESOURCE TABLE -->
+
+        <div class="resource-table-container">
+
+            <table class="resource-table">
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            Resource
+                        </th>
+
+                        <th>
+                            Category
+                        </th>
+
+                        <th>
+                            Author
+                        </th>
+
+                        <th>
+                            Type
+                        </th>
+
+                        <th>
+                            Status
+                        </th>
+
+                        <th>
+                            Actions
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody id="resourceTableBody">
+                </tbody>
+
+
+            </table>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ================= ADD RESOURCE MODAL ================= -->
+
+    <div class="librarian-modal"
+         id="addResourceModal">
+
+
+        <div class="librarian-modal-content">
+
+
+            <div class="modal-heading">
+
+                <div>
+
+                    <p class="dashboard-small-title">
+                        NEW RESOURCE
+                    </p>
+
+                    <h2>
+                        Add Library Resource
+                    </h2>
+
+                </div>
+
+
+                <button
+                    onclick="closeAddResource()">
+
+                    ✕
+
+                </button>
+
+            </div>
+
+
+
+            <form
+                id="addResourceForm">
+
+
+                <div class="modal-form-grid">
+
+
+                    <div class="modal-form-group">
+
+                        <label>
+                            Resource Title
+                        </label>
+
+                        <input
+                            type="text"
+                            id="resourceTitle"
+                            placeholder="Enter resource title"
+                            required>
+
+                    </div>
+
+
+
+                    <div class="modal-form-group">
+
+                        <label>
+                            Author
+                        </label>
+
+                        <input
+                            type="text"
+                            id="resourceAuthor"
+                            placeholder="Enter author name"
+                            required>
+
+                    </div>
+
+
+
+                    <div class="modal-form-group">
+
+                        <label>
+                            Category
+                        </label>
+
+                        <select
+                            id="resourceCategory"
+                            required>
+
+                            <option value="">
+                                Select Category
+                            </option>
+
+                            <option>
+                                Education
+                            </option>
+
+                            <option>
+                                Technology
+                            </option>
+
+                            <option>
+                                Cybersecurity
+                            </option>
+
+                            <option>
+                                Career & Jobs
+                            </option>
+
+                            <option>
+                                Agriculture
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+
+                    <div class="modal-form-group">
+
+                        <label>
+                            Language
+                        </label>
+
+                        <select
+                            id="resourceLanguage"
+                            required>
+
+                            <option value="">
+                                Select Language
+                            </option>
+
+                            <option>
+                                English
+                            </option>
+
+                            <option>
+                                Marathi
+                            </option>
+
+                            <option>
+                                Hindi
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+
+                    <div class="modal-form-group">
+
+                        <label>
+                            Publication Year
+                        </label>
+
+                        <input
+                            type="number"
+                            id="resourceYear"
+                            placeholder="2026"
+                            min="1900"
+                            max="2100"
+                            required>
+
+                    </div>
+
+
+
+                    <div class="modal-form-group">
+
+                        <label>
+                            Resource Type
+                        </label>
+
+                        <select
+                            id="resourceType"
+                            required>
+
+                            <option value="">
+                                Select Type
+                            </option>
+
+                            <option>
+                                E-Book
+                            </option>
+
+                            <option>
+                                PDF
+                            </option>
+
+                            <option>
+                                Notes
+                            </option>
+
+                            <option>
+                                Magazine
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                </div>
+
+
+
+                <div class="modal-form-group full-width">
+
+                    <label>
+                        Description
+                    </label>
+
+                    <textarea
+                        id="resourceDescription"
+                        rows="4"
+                        placeholder="Enter resource description"
+                        required></textarea>
+
+                </div>
+
+
+
+                <div class="modal-form-group full-width">
+
+                    <label>
+                        Upload PDF
+                    </label>
+
+                    <input
+                        type="file"
+                        id="resourceFile"
+                        accept=".pdf">
+
+                    <small>
+                      Select a pdf file for this resource.
+                    </small>
+
+                </div>
+
+
+
+                <div class="modal-actions">
+
+                    <button
+                        type="button"
+                        class="modal-cancel-btn"
+                        onclick="closeAddResource()">
+
+                        Cancel
+
+                    </button>
+
+
+                    <button
+                        type="submit"
+                        class="modal-save-btn">
+
+                        Save Resource
+
+                    </button>
+
+                </div>
+
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- ================= FOOTER ================= -->
+
+    <footer class="main-footer">
+
+        <div class="footer-content">
+
+            <script src="JS/script.js"></script>
+        </body>
+        </html>

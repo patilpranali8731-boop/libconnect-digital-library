@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Register | LibConnect</title>
+
+    <link rel="stylesheet"
+          href="CSS/style.css">
+
+</head>
+
+<body class="auth-page">
+
+
+    <div class="auth-container">
+
+
+        <!-- LEFT SIDE -->
+
+        <div class="auth-info">
+
+            <div class="auth-logo">
+                📚 LibConnect
+            </div>
+
+            <p class="auth-small-title">
+                JOIN OUR COMMUNITY
+            </p>
+
+            <h1>
+                Start Your Learning Journey.
+            </h1>
+
+            <p>
+                Create your account and get access to
+                educational resources, digital books,
+                study materials and community knowledge.
+            </p>
+
+
+            <div class="auth-feature">
+
+                <div>🔎</div>
+
+                <div>
+
+                    <h3>
+                        Discover Resources
+                    </h3>
+
+                    <p>
+                        Search thousands of useful
+                        digital resources.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="auth-feature">
+
+                <div>🔖</div>
+
+                <div>
+
+                    <h3>
+                        Save Your Favorites
+                    </h3>
+
+                    <p>
+                        Bookmark resources that
+                        you want to read later.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- RIGHT SIDE -->
+
+        <div class="auth-form-container">
+
+            <div class="auth-form register-form">
+
+                <h2>
+                    Create Account
+                </h2>
+
+                <p class="form-subtitle">
+                    Join the LibConnect community
+                </p>
+
+
+                <form id="registerForm">
+
+
+                    <!-- FULL NAME -->
+
+                    <div class="form-group">
+
+                        <label for="fullName">
+                            Full Name
+                        </label>
+
+                        <input
+                            type="text"
+                            id="fullName"
+                            placeholder="Enter your full name"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- EMAIL -->
+
+                    <div class="form-group">
+
+                        <label for="registerEmail">
+                            Email Address
+                        </label>
+
+                        <input
+                            type="email"
+                            id="registerEmail"
+                            placeholder="Enter your email"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- COMMUNITY CENTRE -->
+
+                    <div class="form-group">
+
+                        <label for="communityCentre">
+                            Community Centre
+                        </label>
+
+                        <select id="communityCentre"
+                                required>
+
+                            <option value="">
+                                Select your community centre
+                            </option>
+
+                            <option value="centre1">
+                                Main Community Centre
+                            </option>
+
+                            <option value="centre2">
+                                Education Community Centre
+                            </option>
+
+                            <option value="centre3">
+                                City Community Centre
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- PASSWORD -->
+
+                    <div class="form-group">
+
+                        <label for="registerPassword">
+                            Password
+                        </label>
+
+                        <input
+                            type="password"
+                            id="registerPassword"
+                            placeholder="Create a password"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- CONFIRM PASSWORD -->
+
+                    <div class="form-group">
+
+                        <label for="confirmPassword">
+                            Confirm Password
+                        </label>
+
+                        <input
+                            type="password"
+                            id="confirmPassword"
+                            placeholder="Confirm your password"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- TERMS -->
+
+                    <div class="terms">
+
+                        <label>
+
+                            <input
+                                type="checkbox"
+                                id="terms"
+                                required
+                            >
+
+                            I agree to the
+                            <a href="#">
+                                Terms & Conditions
+                            </a>
+
+                        </label>
+
+                    </div>
+
+
+                    <!-- REGISTER BUTTON -->
+
+                    <button
+                        type="submit"
+                        class="auth-submit-btn"
+                    >
+                        Create Account
+                    </button>
+
+                </form>
+
+
+                <p class="account-text">
+
+                    Already have an account?
+
+                    <a href="login.html">
+                        Login
+                    </a>
+
+                </p>
+
+
+                <a href="index.html"
+                   class="back-home">
+
+                    ← Back to Home
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <script src="JS/script.js"></script>
+</body>
+
+</html>
