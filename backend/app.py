@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, send_from_directory
 from flask_cors import CORS
 import mysql.connector
 import os
@@ -77,15 +77,19 @@ def view_pdf(filename):
 
 
 # =====================================================
-# HOME
+# FRONTEND
 # =====================================================
+
+BASE_DIR = os.path.dirname(os.path.dirname(_file_))
+PUBLIC_FOLDER = os.path.join(BASE_DIR, "public")
+
 
 @app.route("/")
 def home():
-
-    return jsonify({
-        "message": "LibConnect Backend is running successfully!"
-    })
+    return send_from_directory(
+        PUBLIC_FOLDER,
+        "index.html"
+    )
 
 
 # =====================================================
