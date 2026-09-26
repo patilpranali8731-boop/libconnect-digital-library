@@ -41,6 +41,11 @@ function searchLibrary() {
 
 /* ================= FILTER LIBRARY ================= */
 
+if (!databaseResources || databaseResources.length === 0) {
+    loadLibraryResources();
+    return;
+}
+
 function filterLibrary() {
 
     const resourceGrid =
