@@ -75,17 +75,17 @@ function filterLibrary() {
 
     const selectedCategory =
         categoryFilter
-            ? categoryFilter.value.toLowerCase()
+            ? categoryFilter.value.toLowerCase().trim()
             : "all";
 
     const selectedLanguage =
         languageFilter
-            ? languageFilter.value.toLowerCase()
+            ? languageFilter.value.toLowerCase().trim()
             : "all";
 
     const selectedType =
         typeFilter
-            ? typeFilter.value.toLowerCase()
+            ? typeFilter.value.toLowerCase().trim()
             : "all";
 
 
@@ -114,15 +114,18 @@ function filterLibrary() {
 
                 const category =
                     (resource.category || "")
-                        .toLowerCase();
+                        .toLowerCase()
+                        .trim();
 
                 const language =
                     (resource.language || "")
-                        .toLowerCase();
+                        .toLowerCase()
+                        .trim();
 
                 const type =
                     (resource.resource_type || "")
-                        .toLowerCase();
+                        .toLowerCase()
+                        .trim();
 
 
                 /* SEARCH */
