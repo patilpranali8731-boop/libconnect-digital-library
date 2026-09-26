@@ -39,6 +39,54 @@ function searchLibrary() {
    SEARCH + FILTER
 ===================================================== */
 
+let databaseResources = [];
+
+
+/* ================= LOAD DATABASE RESOURCES ================= */
+
+async function loadLibraryResources() {
+
+    try {
+
+        const response =
+            await fetch("/api/resources");
+
+        if (!response.ok) {
+
+            throw new Error(
+                "Unable to load resources."
+            );
+
+        }
+
+        const data =
+            await response.json();
+
+        databaseResources =
+            data.resources || [];
+
+        console.log(
+            "Resources loaded:",
+            databaseResources.length
+        );
+
+        return databaseResources;
+
+    } catch (error) {
+
+        console.error(
+            "Database resource error:",
+            error
+        );
+
+        databaseResources = [];
+
+        return [];
+
+    }
+}
+
+
 /* ================= FILTER LIBRARY ================= */
 
 async function filterLibrary() {
@@ -65,14 +113,18 @@ async function filterLibrary() {
         return;
     }
 
+
     /* ================= LOAD RESOURCES ================= */
 
     if (
         !databaseResources ||
         databaseResources.length === 0
     ) {
+
         await loadLibraryResources();
+
     }
+
 
     /* ================= SEARCH VALUES ================= */
 
@@ -83,12 +135,14 @@ async function filterLibrary() {
                 .trim()
             : "";
 
+
     const selectedCategory =
         categoryFilter
             ? categoryFilter.value
                 .toLowerCase()
                 .trim()
             : "all";
+
 
     const selectedLanguage =
         languageFilter
@@ -97,12 +151,40 @@ async function filterLibrary() {
                 .trim()
             : "all";
 
+
     const selectedType =
         typeFilter
             ? typeFilter.value
                 .toLowerCase()
                 .trim()
             : "all";
+
+
+    console.log(
+        "Search:",
+        searchText
+    );
+
+    console.log(
+        "Category:",
+        selectedCategory
+    );
+
+    console.log(
+        "Language:",
+        selectedLanguage
+    );
+
+    console.log(
+        "Type:",
+        selectedType
+    );
+
+    console.log(
+        "Total resources:",
+        databaseResources.length
+    );
+
 
     /* ================= FILTER RESOURCES ================= */
 
@@ -115,30 +197,36 @@ async function filterLibrary() {
                         .toLowerCase()
                         .trim();
 
+
                 const author =
                     (resource.author || "")
                         .toLowerCase()
                         .trim();
+
 
                 const description =
                     (resource.description || "")
                         .toLowerCase()
                         .trim();
 
+
                 const category =
                     (resource.category || "")
                         .toLowerCase()
                         .trim();
+
 
                 const language =
                     (resource.language || "")
                         .toLowerCase()
                         .trim();
 
+
                 const type =
                     (resource.resource_type || "")
                         .toLowerCase()
                         .trim();
+
 
                 /* ================= SEARCH ================= */
 
@@ -148,11 +236,15 @@ async function filterLibrary() {
                     author.includes(searchText) ||
                     description.includes(searchText);
 
+
                 /* ================= CATEGORY ================= */
 
                 let matchesCategory = true;
 
-                if (selectedCategory !== "all") {
+
+                if (
+                    selectedCategory !== "all"
+                ) {
 
                     if (
                         selectedCategory === "career"
@@ -162,7 +254,9 @@ async function filterLibrary() {
                             category === "career" ||
                             category === "career & jobs";
 
-                    } else if (
+                    }
+
+                    else if (
                         selectedCategory === "competitive"
                     ) {
 
@@ -170,7 +264,9 @@ async function filterLibrary() {
                             category === "competitive" ||
                             category === "competitive exams";
 
-                    } else {
+                    }
+
+                    else {
 
                         matchesCategory =
                             category === selectedCategory;
@@ -179,17 +275,22 @@ async function filterLibrary() {
 
                 }
 
+
                 /* ================= LANGUAGE ================= */
 
                 const matchesLanguage =
                     selectedLanguage === "all" ||
                     language === selectedLanguage;
 
+
                 /* ================= RESOURCE TYPE ================= */
 
                 let matchesType = true;
 
-                if (selectedType !== "all") {
+
+                if (
+                    selectedType !== "all"
+                ) {
 
                     if (
                         selectedType === "ebook"
@@ -199,7 +300,9 @@ async function filterLibrary() {
                             type === "ebook" ||
                             type === "e-book";
 
-                    } else if (
+                    }
+
+                    else if (
                         selectedType === "notes"
                     ) {
 
@@ -207,21 +310,27 @@ async function filterLibrary() {
                             type === "notes" ||
                             type === "study notes";
 
-                    } else if (
+                    }
+
+                    else if (
                         selectedType === "magazine"
                     ) {
 
                         matchesType =
                             type === "magazine";
 
-                    } else if (
+                    }
+
+                    else if (
                         selectedType === "newspaper"
                     ) {
 
                         matchesType =
                             type === "newspaper";
 
-                    } else {
+                    }
+
+                    else {
 
                         matchesType =
                             type === selectedType;
@@ -229,6 +338,7 @@ async function filterLibrary() {
                     }
 
                 }
+
 
                 return (
                     matchesSearch &&
@@ -240,9 +350,30 @@ async function filterLibrary() {
             }
         );
 
+
+/* ================= LOAD LIBRARY WHEN PAGE OPENS ================= */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    async function() {
+
+        if (
+            document.getElementById("resourceGrid")
+        ) {
+
+            await loadLibraryResources();
+
+            filterLibrary();
+
+        }
+
+    }
+);
+
     /* ================= DISPLAY ================= */
 
     resourceGrid.innerHTML = "";
+
 
     filteredResources.forEach(
         function(resource) {
@@ -253,54 +384,88 @@ async function filterLibrary() {
             card.className =
                 "resource-card";
 
+
             card.innerHTML = `
 
-                <div class="resource-card-content">
+                <div class="resource-cover education-cover">
 
-                    <div class="resource-card-cover">
-                        📚
-                    </div>
+                    <span>📚</span>
+
+                    <small>
+                        ${resource.resource_type || "RESOURCE"}
+                    </small>
+
+                </div>
+
+
+                <div class="resource-content">
 
                     <span class="resource-category">
                         ${resource.category || "General"}
                     </span>
 
+
                     <h3>
                         ${resource.title || "Untitled Resource"}
                     </h3>
 
-                    <p>
-                        By ${resource.author || "Unknown"}
+
+                    <p class="resource-author">
+
+                        By
+                        ${resource.author || "Unknown Author"}
+
                     </p>
 
-                    <p>
-                        ${resource.description || "Digital learning resource."}
+
+                    <p class="resource-description">
+
+                        ${resource.description || "No description available."}
+
                     </p>
 
-                    <div class="resource-meta">
+
+                    <div class="resource-info">
 
                         <span>
-                            🌐 ${resource.language || "N/A"}
+                            ${resource.language || ""}
                         </span>
 
                         <span>
-                            📄 ${resource.resource_type || "N/A"}
-                        </span>
-
-                        <span>
-                            📅 ${resource.publication_year || "N/A"}
+                            ${resource.publication_year || ""}
                         </span>
 
                     </div>
+
 
                     <div class="resource-actions">
 
                         <a
                             href="book-details.html?id=${resource.id}"
-                            class="btn"
-                        >
+                            class="read-btn">
+
                             Read
+
                         </a>
+
+
+                        <a
+                            href="#"
+                            class="download-btn"
+                            onclick="downloadResource(event, '${resource.title}')">
+
+                            Download
+
+                        </a>
+
+
+                        <button
+                            class="bookmark-btn"
+                            onclick="bookmarkResource(this)">
+
+                            ♡
+
+                        </button>
 
                     </div>
 
@@ -308,29 +473,29 @@ async function filterLibrary() {
 
             `;
 
+
             resourceGrid.appendChild(card);
 
         }
     );
 
+
     /* ================= RESOURCE COUNT ================= */
 
     const resourceCount =
-        document.getElementById(
-            "libraryResourceCount"
+        document.querySelector(
+            ".resource-count"
         );
+
 
     if (resourceCount) {
 
         resourceCount.textContent =
             filteredResources.length +
-            (
-                filteredResources.length === 1
-                    ? " Resource"
-                    : " Resources"
-            );
+            "+ Resources";
 
     }
+
 
     /* ================= NO RESULTS ================= */
 
@@ -343,7 +508,26 @@ async function filterLibrary() {
 
     }
 
-}
+
+
+/* ================= LOAD LIBRARY WHEN PAGE OPENS ================= */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    async function() {
+
+        if (
+            document.getElementById("resourceGrid")
+        ) {
+
+            await loadLibraryResources();
+
+            filterLibrary();
+
+        }
+
+    }
+);
 
 /* =====================================================
    READ RESOURCE
@@ -1158,325 +1342,9 @@ function toggleMenu() {
    STEP 14 - DATABASE RESOURCES
 ===================================================== */
 
-let databaseResources = [];
 
 
-/* ================= LOAD DATABASE RESOURCES ================= */
 
-/* ================= FILTER LIBRARY ================= */
-
-async function filterLibrary() {
-
-    const resourceGrid =
-        document.getElementById("resourceGrid");
-
-    const noResults =
-        document.getElementById("noResults");
-
-    const searchInput =
-        document.getElementById("librarySearch");
-
-    const categoryFilter =
-        document.getElementById("categoryFilter");
-
-    const languageFilter =
-        document.getElementById("languageFilter");
-
-    const typeFilter =
-        document.getElementById("typeFilter");
-
-    if (!resourceGrid) {
-        return;
-    }
-
-    /* ================= LOAD RESOURCES ================= */
-
-    if (
-        !databaseResources ||
-        databaseResources.length === 0
-    ) {
-        await loadLibraryResources();
-    }
-
-    /* ================= SEARCH VALUES ================= */
-
-    const searchText =
-        searchInput
-            ? searchInput.value
-                .toLowerCase()
-                .trim()
-            : "";
-
-    const selectedCategory =
-        categoryFilter
-            ? categoryFilter.value
-                .toLowerCase()
-                .trim()
-            : "all";
-
-    const selectedLanguage =
-        languageFilter
-            ? languageFilter.value
-                .toLowerCase()
-                .trim()
-            : "all";
-
-    const selectedType =
-        typeFilter
-            ? typeFilter.value
-                .toLowerCase()
-                .trim()
-            : "all";
-
-    /* ================= FILTER RESOURCES ================= */
-
-    const filteredResources =
-        databaseResources.filter(
-            function(resource) {
-
-                const title =
-                    (resource.title || "")
-                        .toLowerCase()
-                        .trim();
-
-                const author =
-                    (resource.author || "")
-                        .toLowerCase()
-                        .trim();
-
-                const description =
-                    (resource.description || "")
-                        .toLowerCase()
-                        .trim();
-
-                const category =
-                    (resource.category || "")
-                        .toLowerCase()
-                        .trim();
-
-                const language =
-                    (resource.language || "")
-                        .toLowerCase()
-                        .trim();
-
-                const type =
-                    (resource.resource_type || "")
-                        .toLowerCase()
-                        .trim();
-
-                /* ================= SEARCH ================= */
-
-                const matchesSearch =
-                    searchText === "" ||
-                    title.includes(searchText) ||
-                    author.includes(searchText) ||
-                    description.includes(searchText);
-
-                /* ================= CATEGORY ================= */
-
-                let matchesCategory = true;
-
-                if (selectedCategory !== "all") {
-
-                    if (
-                        selectedCategory === "career"
-                    ) {
-
-                        matchesCategory =
-                            category === "career" ||
-                            category === "career & jobs";
-
-                    } else if (
-                        selectedCategory === "competitive"
-                    ) {
-
-                        matchesCategory =
-                            category === "competitive" ||
-                            category === "competitive exams";
-
-                    } else {
-
-                        matchesCategory =
-                            category === selectedCategory;
-
-                    }
-
-                }
-
-                /* ================= LANGUAGE ================= */
-
-                const matchesLanguage =
-                    selectedLanguage === "all" ||
-                    language === selectedLanguage;
-
-                /* ================= RESOURCE TYPE ================= */
-
-                let matchesType = true;
-
-                if (selectedType !== "all") {
-
-                    if (
-                        selectedType === "ebook"
-                    ) {
-
-                        matchesType =
-                            type === "ebook" ||
-                            type === "e-book";
-
-                    } else if (
-                        selectedType === "notes"
-                    ) {
-
-                        matchesType =
-                            type === "notes" ||
-                            type === "study notes";
-
-                    } else if (
-                        selectedType === "magazine"
-                    ) {
-
-                        matchesType =
-                            type === "magazine";
-
-                    } else if (
-                        selectedType === "newspaper"
-                    ) {
-
-                        matchesType =
-                            type === "newspaper";
-
-                    } else {
-
-                        matchesType =
-                            type === selectedType;
-
-                    }
-
-                }
-
-                return (
-                    matchesSearch &&
-                    matchesCategory &&
-                    matchesLanguage &&
-                    matchesType
-                );
-
-            }
-        );
-
-    /* ================= DISPLAY ================= */
-
-    resourceGrid.innerHTML = "";
-
-    filteredResources.forEach(
-        function(resource) {
-
-            const card =
-                document.createElement("div");
-
-            card.className =
-                "resource-card";
-
-            card.innerHTML = `
-
-                <div class="resource-card-content">
-
-                    <div class="resource-card-cover">
-                        📚
-                    </div>
-
-                    <span class="resource-category">
-                        ${resource.category || "General"}
-                    </span>
-
-                    <h3>
-                        ${resource.title || "Untitled Resource"}
-                    </h3>
-
-                    <p>
-                        By ${resource.author || "Unknown"}
-                    </p>
-
-                    <p>
-                        ${resource.description || "Digital learning resource."}
-                    </p>
-
-                    <div class="resource-meta">
-
-                        <span>
-                            🌐 ${resource.language || "N/A"}
-                        </span>
-
-                        <span>
-                            📄 ${resource.resource_type || "N/A"}
-                        </span>
-
-                        <span>
-                            📅 ${resource.publication_year || "N/A"}
-                        </span>
-
-                    </div>
-
-                    <div class="resource-actions">
-
-                        <a
-                            href="book-details.html?id=${resource.id}"
-                            class="btn"
-                        >
-                            Read
-                        </a>
-
-                    </div>
-
-                </div>
-
-            `;
-
-            resourceGrid.appendChild(card);
-
-        }
-    );
-
-    /* ================= RESOURCE COUNT ================= */
-
-    const resourceCount =
-        document.getElementById(
-            "libraryResourceCount"
-        );
-
-    if (resourceCount) {
-
-        resourceCount.textContent =
-            filteredResources.length +
-            (
-                filteredResources.length === 1
-                    ? " Resource"
-                    : " Resources"
-            );
-
-    }
-
-    /* ================= NO RESULTS ================= */
-
-    if (noResults) {
-
-        noResults.style.display =
-            filteredResources.length === 0
-                ? "block"
-                : "none";
-
-    }
-
-}
-
-        // Only filter if the library page exists
-        if (
-            document.getElementById("resourceGrid")
-        ) {
-
-            filterLibrary();
-
-        }
 
 /* ================= LOAD LIBRARY WHEN PAGE OPENS ================= */
 
@@ -2476,4 +2344,5 @@ if (
 
     loadResourceDetails();
 
+}
 }
