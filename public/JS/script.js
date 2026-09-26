@@ -88,12 +88,6 @@ function filterLibrary() {
             ? typeFilter.value.toLowerCase().trim()
             : "all";
 
-
-    if (!databaseResources || databaseResources.length === 0) {
-    loadLibraryResources();
-    return;
-}
-
     /* ================= FILTER RESOURCES ================= */
 
     const filteredResources =
