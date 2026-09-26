@@ -924,6 +924,17 @@ def edit_resource(resource_id):
         }), 500
 
 # =====================================================
+# SERVE FRONTEND FILES
+# =====================================================
+
+@app.route("/<path:filename>")
+def serve_frontend(filename):
+    return send_from_directory(
+        PUBLIC_FOLDER,
+        filename
+    )
+
+# =====================================================
 # RUN SERVER
 # =====================================================
 
