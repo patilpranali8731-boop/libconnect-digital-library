@@ -1160,16 +1160,12 @@ async function loadLibraryResources() {
     try {
 
         const response =
-            await fetch(
-                "/api/resources"
-            );
+            await fetch("/api/resources");
 
         if (!response.ok) {
-
             throw new Error(
                 "Unable to load resources."
             );
-
         }
 
         const data =
@@ -1179,18 +1175,14 @@ async function loadLibraryResources() {
             data.resources || [];
 
         console.log(
-            "Resources loaded from database:",
-            databaseResources
+            "Resources loaded:",
+            databaseResources.length
         );
 
-        // If this is the Digital Library page,
-        // display the resources.
         if (
             document.getElementById("resourceGrid")
         ) {
-
             filterLibrary();
-
         }
 
     } catch (error) {
@@ -1199,15 +1191,6 @@ async function loadLibraryResources() {
             "Database resource error:",
             error
         );
-
-        // Only filter if the library page exists
-        if (
-            document.getElementById("resourceGrid")
-        ) {
-
-            filterLibrary();
-
-        }
 
     }
 }
