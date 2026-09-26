@@ -1478,9 +1478,6 @@ async function filterLibrary() {
 
         }
 
-    }
-}
-
 /* ================= LOAD LIBRARY WHEN PAGE OPENS ================= */
 
 document.addEventListener(
