@@ -80,7 +80,7 @@ def view_pdf(filename):
 # FRONTEND
 # =====================================================
 
-BASE_DIR = os.path.dirname(os.path.dirname(_file_))
+BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 PUBLIC_FOLDER = os.path.join(BASE_DIR, "public")
 
 
