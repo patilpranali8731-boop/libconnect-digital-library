@@ -112,7 +112,6 @@ async function filterLibrary() {
     if (!resourceGrid) {
         return;
     }
-}
 
 
     /* ================= LOAD RESOURCES ================= */
@@ -351,6 +350,7 @@ async function filterLibrary() {
             }
         );
 
+
     /* ================= DISPLAY ================= */
 
     resourceGrid.innerHTML = "";
@@ -489,7 +489,168 @@ async function filterLibrary() {
 
     }
 
-    /* ================= LOAD LIBRARY WHEN PAGE OPENS ================= */
+}
+
+
+/* ================= LOAD LIBRARY WHEN PAGE OPENS ================= */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    async function() {
+
+        if (
+            document.getElementById("resourceGrid")
+        ) {
+
+            await loadLibraryResources();
+
+            filterLibrary();
+
+        }
+
+    }
+);
+
+    /* ================= DISPLAY ================= */
+
+    resourceGrid.innerHTML = "";
+
+
+    filteredResources.forEach(
+        function(resource) {
+
+            const card =
+                document.createElement("div");
+
+            card.className =
+                "resource-card";
+
+
+            card.innerHTML = `
+
+                <div class="resource-cover education-cover">
+
+                    <span>📚</span>
+
+                    <small>
+                        ${resource.resource_type || "RESOURCE"}
+                    </small>
+
+                </div>
+
+
+                <div class="resource-content">
+
+                    <span class="resource-category">
+                        ${resource.category || "General"}
+                    </span>
+
+
+                    <h3>
+                        ${resource.title || "Untitled Resource"}
+                    </h3>
+
+
+                    <p class="resource-author">
+
+                        By
+                        ${resource.author || "Unknown Author"}
+
+                    </p>
+
+
+                    <p class="resource-description">
+
+                        ${resource.description || "No description available."}
+
+                    </p>
+
+
+                    <div class="resource-info">
+
+                        <span>
+                            ${resource.language || ""}
+                        </span>
+
+                        <span>
+                            ${resource.publication_year || ""}
+                        </span>
+
+                    </div>
+
+
+                    <div class="resource-actions">
+
+                        <a
+                            href="book-details.html?id=${resource.id}"
+                            class="read-btn">
+
+                            Read
+
+                        </a>
+
+
+                        <a
+                            href="#"
+                            class="download-btn"
+                            onclick="downloadResource(event, '${resource.title}')">
+
+                            Download
+
+                        </a>
+
+
+                        <button
+                            class="bookmark-btn"
+                            onclick="bookmarkResource(this)">
+
+                            ♡
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+            `;
+
+
+            resourceGrid.appendChild(card);
+
+        }
+    );
+
+
+    /* ================= RESOURCE COUNT ================= */
+
+    const resourceCount =
+        document.querySelector(
+            ".resource-count"
+        );
+
+
+    if (resourceCount) {
+
+        resourceCount.textContent =
+            filteredResources.length +
+            "+ Resources";
+
+    }
+
+
+    /* ================= NO RESULTS ================= */
+
+    if (noResults) {
+
+        noResults.style.display =
+            filteredResources.length === 0
+                ? "block"
+                : "none";
+
+    }
+
+
+/* ================= LOAD LIBRARY WHEN PAGE OPENS ================= */
 
 document.addEventListener(
     "DOMContentLoaded",
@@ -1322,12 +1483,83 @@ function toggleMenu() {
 ===================================================== */
 
 
+/* ================= LOAD DATABASE RESOURCES ================= */
 
+async function loadLibraryResources() {
 
+    try {
+
+        const response =
+            await fetch(
+                "/api/resources"
+            );
+
+        if (!response.ok) {
+
+            throw new Error(
+                "Unable to load resources."
+            );
+
+        }
+
+        const data =
+            await response.json();
+
+        databaseResources =
+            data.resources || [];
+
+        console.log(
+            "Resources loaded from database:",
+            databaseResources
+        );
+
+        // If this is the Digital Library page,
+        // display the resources.
+        if (
+            document.getElementById("resourceGrid")
+        ) {
+
+            filterLibrary();
+
+        }
+
+    } catch (error) {
+
+        console.error(
+            "Database resource error:",
+            error
+        );
+
+        // Only filter if the library page exists
+        if (
+            document.getElementById("resourceGrid")
+        ) {
+
+            filterLibrary();
+
+        }
+
+    }
+}
 
 /* ================= LOAD LIBRARY WHEN PAGE OPENS ================= */
 
+document.addEventListener(
+    "DOMContentLoaded",
+    function() {
 
+        if (
+            document.getElementById(
+                "resourceGrid"
+            )
+        ) {
+
+            loadLibraryResources();
+
+        }
+
+    }
+);
 
 
 /* =====================================================
@@ -1950,12 +2182,204 @@ if (document.getElementById("librarianTotalResources")) {
 // LOAD LIBRARY RESOURCES FROM DATABASE
 // ==========================================
 
+async function loadLibraryResources() {
 
+    try {
+
+        const response = await fetch(
+            "/api/resources"
+        );
+
+        const data = await response.json();
+
+        if (data.status !== "success") {
+
+            console.error(data.message);
+
+            return;
+        }
+
+        const resourceGrid =
+            document.getElementById("resourceGrid");
+
+        if (!resourceGrid) {
+            return;
+        }
+
+        // Clear existing resources
+        resourceGrid.innerHTML = "";
+
+        // Display database resources
+        data.resources.forEach(function(resource) {
+
+            const card =
+                document.createElement("div");
+
+            card.className = "resource-card";
+
+            card.setAttribute(
+                "data-title",
+                resource.title
+            );
+
+            card.setAttribute(
+                "data-author",
+                resource.author || ""
+            );
+
+            card.setAttribute(
+                "data-category",
+                resource.category || ""
+            );
+
+            card.setAttribute(
+                "data-language",
+                resource.language || ""
+            );
+
+            card.setAttribute(
+                "data-type",
+                resource.resource_type || ""
+            );
+
+
+            card.innerHTML = `
+
+                <div class="resource-cover education-cover">
+
+                    <span>📚</span>
+
+                    <small>
+                        ${resource.resource_type || "RESOURCE"}
+                    </small>
+
+                </div>
+
+
+                <div class="resource-content">
+
+                    <span class="resource-category">
+                        ${resource.category}
+                    </span>
+
+
+                    <h3>
+                        ${resource.title}
+                    </h3>
+
+
+                    <p class="resource-author">
+
+                        By
+                        ${resource.author || "Unknown Author"}
+
+                    </p>
+
+
+                    <p class="resource-description">
+
+                        ${resource.description || "No description available."}
+
+                    </p>
+
+
+                    <div class="resource-info">
+
+                        <span>
+                            ${resource.language}
+                        </span>
+
+                        <span>
+                            ${resource.publication_year || ""}
+                        </span>
+
+                    </div>
+
+
+                    <div class="resource-actions">
+
+                        <a
+                            href="book-details.html?id=${resource.id}"
+                            class="read-btn">
+
+                            Read
+
+                        </a>
+
+
+                        <a
+                            href="#"
+                            class="download-btn"
+                            onclick="downloadResource(event, '${resource.title}')">
+
+                            Download
+
+                        </a>
+
+
+                        <button
+                            class="bookmark-btn"
+                            onclick="bookmarkResource(this)">
+
+                            ♡
+
+                        </button>
+
+                    </div>
+
+                </div>
+            `;
+
+
+            resourceGrid.appendChild(card);
+
+        });
+
+
+        // Update resource count
+        const resourceCount =
+            document.querySelector(".resource-count");
+
+        if (resourceCount) {
+
+            resourceCount.textContent =
+                data.resources.length +
+                "+ Resources";
+
+        }
+
+    } catch (error) {
+
+        console.error(
+            "Library resource loading error:",
+            error
+        );
+    }
+}
+
+
+// Run only on Digital Library page
+
+if (
+    document.getElementById("resourceGrid")
+) {
+
+    loadLibraryResources();
+
+}
 
 // ==========================================
 // LOAD RESOURCES ON BOOK DETAILS PAGE
 // ==========================================
 
+if (
+    document.getElementById("pdfReaderSection") &&
+    new URLSearchParams(window.location.search).get("id")
+) {
+
+    loadLibraryResources();
+
+}
 
 /// ==========================================
 // LOAD RESOURCE DETAILS
@@ -2115,16 +2539,5 @@ if (
 ) {
 
     loadResourceDetails();
-
-}
-
-/* ================= OPEN PDF READER ON BOOK DETAILS ================= */
-
-if (
-    document.getElementById("pdfReaderSection") &&
-    new URLSearchParams(window.location.search).get("id")
-) {
-
-    openPDFReader();
 
 }
