@@ -39,57 +39,9 @@ function searchLibrary() {
    SEARCH + FILTER
 ===================================================== */
 
-let databaseResources = [];
-
-
-/* ================= LOAD DATABASE RESOURCES ================= */
-
-async function loadLibraryResources() {
-
-    try {
-
-        const response =
-            await fetch("/api/resources");
-
-        if (!response.ok) {
-
-            throw new Error(
-                "Unable to load resources."
-            );
-
-        }
-
-        const data =
-            await response.json();
-
-        databaseResources =
-            data.resources || [];
-
-        console.log(
-            "Resources loaded:",
-            databaseResources.length
-        );
-
-        return databaseResources;
-
-    } catch (error) {
-
-        console.error(
-            "Database resource error:",
-            error
-        );
-
-        databaseResources = [];
-
-        return [];
-
-    }
-}
-
-
 /* ================= FILTER LIBRARY ================= */
 
-async function filterLibrary() {
+function filterLibrary() {
 
     const resourceGrid =
         document.getElementById("resourceGrid");
@@ -114,20 +66,6 @@ async function filterLibrary() {
     }
 
 
-    /* ================= LOAD RESOURCES ================= */
-
-    if (
-        !databaseResources ||
-        databaseResources.length === 0
-    ) {
-
-        await loadLibraryResources();
-
-    }
-
-
-    /* ================= SEARCH VALUES ================= */
-
     const searchText =
         searchInput
             ? searchInput.value
@@ -135,56 +73,26 @@ async function filterLibrary() {
                 .trim()
             : "";
 
-
     const selectedCategory =
         categoryFilter
-            ? categoryFilter.value
-                .toLowerCase()
-                .trim()
+            ? categoryFilter.value.toLowerCase().trim()
             : "all";
-
 
     const selectedLanguage =
         languageFilter
-            ? languageFilter.value
-                .toLowerCase()
-                .trim()
+            ? languageFilter.value.toLowerCase().trim()
             : "all";
-
 
     const selectedType =
         typeFilter
-            ? typeFilter.value
-                .toLowerCase()
-                .trim()
+            ? typeFilter.value.toLowerCase().trim()
             : "all";
 
 
-    console.log(
-        "Search:",
-        searchText
-    );
-
-    console.log(
-        "Category:",
-        selectedCategory
-    );
-
-    console.log(
-        "Language:",
-        selectedLanguage
-    );
-
-    console.log(
-        "Type:",
-        selectedType
-    );
-
-    console.log(
-        "Total resources:",
-        databaseResources.length
-    );
-
+    if (!databaseResources || databaseResources.length === 0) {
+    loadLibraryResources();
+    return;
+}
 
     /* ================= FILTER RESOURCES ================= */
 
@@ -194,33 +102,25 @@ async function filterLibrary() {
 
                 const title =
                     (resource.title || "")
-                        .toLowerCase()
-                        .trim();
-
+                        .toLowerCase();
 
                 const author =
                     (resource.author || "")
-                        .toLowerCase()
-                        .trim();
-
+                        .toLowerCase();
 
                 const description =
                     (resource.description || "")
-                        .toLowerCase()
-                        .trim();
-
+                        .toLowerCase();
 
                 const category =
                     (resource.category || "")
                         .toLowerCase()
                         .trim();
 
-
                 const language =
                     (resource.language || "")
                         .toLowerCase()
                         .trim();
-
 
                 const type =
                     (resource.resource_type || "")
@@ -228,112 +128,87 @@ async function filterLibrary() {
                         .trim();
 
 
-                /* ================= SEARCH ================= */
+                /* SEARCH */
 
                 const matchesSearch =
-                    searchText === "" ||
+                    !searchText ||
                     title.includes(searchText) ||
                     author.includes(searchText) ||
                     description.includes(searchText);
 
 
-                /* ================= CATEGORY ================= */
+                /* CATEGORY */
 
                 let matchesCategory = true;
 
+                if (selectedCategory !== "all") {
 
-                if (
-                    selectedCategory !== "all"
-                ) {
+                    matchesCategory =
+                        category === selectedCategory;
+
+                    /*
+                       Career & Jobs
+                    */
 
                     if (
-                        selectedCategory === "career"
+                        selectedCategory === "career" &&
+                        category === "career & jobs"
                     ) {
-
-                        matchesCategory =
-                            category === "career" ||
-                            category === "career & jobs";
-
+                        matchesCategory = true;
                     }
 
-                    else if (
-                        selectedCategory === "competitive"
+                    /*
+                       Competitive Exams
+                    */
+
+                    if (
+                        selectedCategory === "competitive" &&
+                        category === "competitive exams"
                     ) {
-
-                        matchesCategory =
-                            category === "competitive" ||
-                            category === "competitive exams";
-
-                    }
-
-                    else {
-
-                        matchesCategory =
-                            category === selectedCategory;
-
+                        matchesCategory = true;
                     }
 
                 }
 
 
-                /* ================= LANGUAGE ================= */
+                /* LANGUAGE */
 
                 const matchesLanguage =
                     selectedLanguage === "all" ||
                     language === selectedLanguage;
 
 
-                /* ================= RESOURCE TYPE ================= */
+                /* RESOURCE TYPE */
 
                 let matchesType = true;
 
+                if (selectedType !== "all") {
 
-                if (
-                    selectedType !== "all"
-                ) {
-
-                    if (
-                        selectedType === "ebook"
-                    ) {
+                    if (selectedType === "ebook") {
 
                         matchesType =
-                            type === "ebook" ||
                             type === "e-book";
 
-                    }
-
-                    else if (
+                    } else if (
                         selectedType === "notes"
                     ) {
 
                         matchesType =
-                            type === "notes" ||
-                            type === "study notes";
+                            type === "notes";
 
-                    }
-
-                    else if (
+                    } else if (
                         selectedType === "magazine"
                     ) {
 
                         matchesType =
                             type === "magazine";
 
-                    }
-
-                    else if (
+                    } else if (
                         selectedType === "newspaper"
                     ) {
 
                         matchesType =
                             type === "newspaper";
-
-                    }
-
-                    else {
-
-                        matchesType =
-                            type === selectedType;
 
                     }
 
@@ -368,85 +243,52 @@ async function filterLibrary() {
 
             card.innerHTML = `
 
-                <div class="resource-cover education-cover">
+                <div class="resource-card-content">
 
-                    <span>📚</span>
-
-                    <small>
-                        ${resource.resource_type || "RESOURCE"}
-                    </small>
-
-                </div>
-
-
-                <div class="resource-content">
+                    <div class="resource-card-cover">
+                        📚
+                    </div>
 
                     <span class="resource-category">
                         ${resource.category || "General"}
                     </span>
 
-
                     <h3>
                         ${resource.title || "Untitled Resource"}
                     </h3>
 
-
-                    <p class="resource-author">
-
-                        By
-                        ${resource.author || "Unknown Author"}
-
+                    <p>
+                        By ${resource.author || "Unknown"}
                     </p>
 
-
-                    <p class="resource-description">
-
-                        ${resource.description || "No description available."}
-
+                    <p>
+                        ${resource.description || "Digital learning resource."}
                     </p>
 
-
-                    <div class="resource-info">
+                    <div class="resource-meta">
 
                         <span>
-                            ${resource.language || ""}
+                            🌐 ${resource.language || "N/A"}
                         </span>
 
                         <span>
-                            ${resource.publication_year || ""}
+                            📄 ${resource.resource_type || "N/A"}
+                        </span>
+
+                        <span>
+                            📅 ${resource.publication_year || "N/A"}
                         </span>
 
                     </div>
-
 
                     <div class="resource-actions">
 
                         <a
                             href="book-details.html?id=${resource.id}"
-                            class="read-btn">
-
+                            class="btn"
+                        >
                             Read
-
                         </a>
-
-
-                        <a
-                            href="#"
-                            class="download-btn"
-                            onclick="downloadResource(event, '${resource.title}')">
-
-                            Download
-
-                        </a>
-
-
-                        <button
-                            class="bookmark-btn"
-                            onclick="bookmarkResource(this)">
-
-                            ♡
-
-                        </button>
 
                     </div>
 
@@ -464,16 +306,19 @@ async function filterLibrary() {
     /* ================= RESOURCE COUNT ================= */
 
     const resourceCount =
-        document.querySelector(
-            ".resource-count"
+        document.getElementById(
+            "libraryResourceCount"
         );
-
 
     if (resourceCount) {
 
         resourceCount.textContent =
             filteredResources.length +
-            "+ Resources";
+            (
+                filteredResources.length === 1
+                    ? " Resource"
+                    : " Resources"
+            );
 
     }
 
@@ -482,192 +327,21 @@ async function filterLibrary() {
 
     if (noResults) {
 
-        noResults.style.display =
-            filteredResources.length === 0
-                ? "block"
-                : "none";
+        if (filteredResources.length === 0) {
+
+            noResults.style.display =
+                "block";
+
+        } else {
+
+            noResults.style.display =
+                "none";
+
+        }
 
     }
 
 }
-
-
-/* ================= LOAD LIBRARY WHEN PAGE OPENS ================= */
-
-document.addEventListener(
-    "DOMContentLoaded",
-    async function() {
-
-        if (
-            document.getElementById("resourceGrid")
-        ) {
-
-            await loadLibraryResources();
-
-            filterLibrary();
-
-        }
-
-    }
-);
-
-    /* ================= DISPLAY ================= */
-
-    resourceGrid.innerHTML = "";
-
-
-    filteredResources.forEach(
-        function(resource) {
-
-            const card =
-                document.createElement("div");
-
-            card.className =
-                "resource-card";
-
-
-            card.innerHTML = `
-
-                <div class="resource-cover education-cover">
-
-                    <span>📚</span>
-
-                    <small>
-                        ${resource.resource_type || "RESOURCE"}
-                    </small>
-
-                </div>
-
-
-                <div class="resource-content">
-
-                    <span class="resource-category">
-                        ${resource.category || "General"}
-                    </span>
-
-
-                    <h3>
-                        ${resource.title || "Untitled Resource"}
-                    </h3>
-
-
-                    <p class="resource-author">
-
-                        By
-                        ${resource.author || "Unknown Author"}
-
-                    </p>
-
-
-                    <p class="resource-description">
-
-                        ${resource.description || "No description available."}
-
-                    </p>
-
-
-                    <div class="resource-info">
-
-                        <span>
-                            ${resource.language || ""}
-                        </span>
-
-                        <span>
-                            ${resource.publication_year || ""}
-                        </span>
-
-                    </div>
-
-
-                    <div class="resource-actions">
-
-                        <a
-                            href="book-details.html?id=${resource.id}"
-                            class="read-btn">
-
-                            Read
-
-                        </a>
-
-
-                        <a
-                            href="#"
-                            class="download-btn"
-                            onclick="downloadResource(event, '${resource.title}')">
-
-                            Download
-
-                        </a>
-
-
-                        <button
-                            class="bookmark-btn"
-                            onclick="bookmarkResource(this)">
-
-                            ♡
-
-                        </button>
-
-                    </div>
-
-                </div>
-
-            `;
-
-
-            resourceGrid.appendChild(card);
-
-        }
-    );
-
-
-    /* ================= RESOURCE COUNT ================= */
-
-    const resourceCount =
-        document.querySelector(
-            ".resource-count"
-        );
-
-
-    if (resourceCount) {
-
-        resourceCount.textContent =
-            filteredResources.length +
-            "+ Resources";
-
-    }
-
-
-    /* ================= NO RESULTS ================= */
-
-    if (noResults) {
-
-        noResults.style.display =
-            filteredResources.length === 0
-                ? "block"
-                : "none";
-
-    }
-
-
-/* ================= LOAD LIBRARY WHEN PAGE OPENS ================= */
-
-document.addEventListener(
-    "DOMContentLoaded",
-    async function() {
-
-        if (
-            document.getElementById("resourceGrid")
-        ) {
-
-            await loadLibraryResources();
-
-            filterLibrary();
-
-        }
-
-    }
-);
 
 /* =====================================================
    READ RESOURCE
@@ -1481,6 +1155,8 @@ function toggleMenu() {
 /* =====================================================
    STEP 14 - DATABASE RESOURCES
 ===================================================== */
+
+let databaseResources = [];
 
 
 /* ================= LOAD DATABASE RESOURCES ================= */
