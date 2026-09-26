@@ -32,67 +32,76 @@ function filterLibrary() {
     }
 
 
+    /* ================= GET SELECTED VALUES ================= */
+
     const searchText =
         searchInput
-            ? searchInput.value.toLowerCase().trim()
+            ? searchInput.value.trim().toLowerCase()
             : "";
 
     const selectedCategory =
         categoryFilter
-            ? categoryFilter.value.toLowerCase().trim()
+            ? categoryFilter.value.trim().toLowerCase()
             : "all";
 
     const selectedLanguage =
         languageFilter
-            ? languageFilter.value.toLowerCase().trim()
+            ? languageFilter.value.trim().toLowerCase()
             : "all";
 
     const selectedType =
         typeFilter
-            ? typeFilter.value.toLowerCase().trim()
+            ? typeFilter.value.trim().toLowerCase()
             : "all";
 
 
-    /* ================= FILTER RESOURCES ================= */
+    /* ================= NORMALIZE TEXT ================= */
+
+    function normalize(value) {
+
+        return String(value || "")
+            .toLowerCase()
+            .trim()
+            .replace(/[-_&]/g, " ")
+            .replace(/\s+/g, " ");
+
+    }
+
+
+    /* ================= FILTER ================= */
 
     const filteredResources =
         databaseResources.filter(function(resource) {
 
             const title =
-                String(resource.title || "")
-                    .toLowerCase();
+                normalize(resource.title);
 
             const author =
-                String(resource.author || "")
-                    .toLowerCase();
+                normalize(resource.author);
 
             const description =
-                String(resource.description || "")
-                    .toLowerCase();
+                normalize(resource.description);
 
             const category =
-                String(resource.category || "")
-                    .toLowerCase()
-                    .trim();
+                normalize(resource.category);
 
             const language =
-                String(resource.language || "")
-                    .toLowerCase()
-                    .trim();
+                normalize(resource.language);
 
             const type =
-                String(resource.resource_type || "")
-                    .toLowerCase()
-                    .trim();
+                normalize(resource.resource_type);
 
 
             /* ================= SEARCH ================= */
 
             const matchesSearch =
                 searchText === "" ||
-                title.includes(searchText) ||
-                author.includes(searchText) ||
-                description.includes(searchText);
+                title.includes(normalize(searchText)) ||
+                author.includes(normalize(searchText)) ||
+                description.includes(normalize(searchText)) ||
+                category.includes(normalize(searchText)) ||
+                language.includes(normalize(searchText)) ||
+                type.includes(normalize(searchText));
 
 
             /* ================= CATEGORY ================= */
@@ -101,24 +110,11 @@ function filterLibrary() {
 
             if (selectedCategory !== "all") {
 
-                if (selectedCategory === "career") {
+                const wantedCategory =
+                    normalize(selectedCategory);
 
-                    matchesCategory =
-                        category === "career" ||
-                        category === "career & jobs";
-
-                } else if (selectedCategory === "competitive") {
-
-                    matchesCategory =
-                        category === "competitive" ||
-                        category === "competitive exams";
-
-                } else {
-
-                    matchesCategory =
-                        category === selectedCategory;
-
-                }
+                matchesCategory =
+                    category === wantedCategory;
 
             }
 
@@ -129,8 +125,11 @@ function filterLibrary() {
 
             if (selectedLanguage !== "all") {
 
+                const wantedLanguage =
+                    normalize(selectedLanguage);
+
                 matchesLanguage =
-                    language === selectedLanguage;
+                    language === wantedLanguage;
 
             }
 
@@ -141,24 +140,11 @@ function filterLibrary() {
 
             if (selectedType !== "all") {
 
-                if (selectedType === "ebook") {
+                const wantedType =
+                    normalize(selectedType);
 
-                    matchesType =
-                        type === "ebook" ||
-                        type === "e-book";
-
-                } else if (selectedType === "notes") {
-
-                    matchesType =
-                        type === "notes" ||
-                        type === "study notes";
-
-                } else {
-
-                    matchesType =
-                        type === selectedType;
-
-                }
+                matchesType =
+                    type === wantedType;
 
             }
 
@@ -173,7 +159,7 @@ function filterLibrary() {
         });
 
 
-    /* ================= DISPLAY ================= */
+    /* ================= DISPLAY RESULTS ================= */
 
     resourceGrid.innerHTML = "";
 
@@ -231,8 +217,7 @@ function filterLibrary() {
 
                     <a
                         href="book-details.html?id=${resource.id}"
-                        class="btn"
-                    >
+                        class="btn">
                         Read
                     </a>
 
