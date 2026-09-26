@@ -428,7 +428,7 @@ async function openPDFReader() {
         // Get all resources directly from backend
         const response =
             await fetch(
-                "0/api/resources"
+                "/api/resources"
             );
 
         if (!response.ok) {
@@ -495,7 +495,7 @@ async function openPDFReader() {
 
         // Create actual PDF URL
         const pdfUrl =
-            "0/api/resources/pdf/" +
+            "/api/resources/pdf/" +
             encodeURIComponent(
                 resource.file_path
             );
@@ -718,7 +718,7 @@ async function editResource(resourceId) {
     try {
 
         const response = await fetch(
-            `0/api/resources/${resourceId}`,
+            `/api/resources/${resourceId}`,
             {
                 method: "PUT",
                 headers: {
@@ -777,7 +777,7 @@ async function deleteResource(resourceId) {
     try {
 
         const response = await fetch(
-            `0/api/resources/${resourceId}`,
+            `/api/resources/${resourceId}`,
             {
                 method: "DELETE"
             }
@@ -902,7 +902,7 @@ if (addResourceForm) {
             try {
 
                 const response = await fetch(
-                    "0/api/resources",
+                    "/api/resources",
                     {
                         method: "POST",
 
@@ -1116,7 +1116,7 @@ async function loadLibraryResources() {
 
         const response =
             await fetch(
-                "0/api/resources"
+                "/api/resources"
             );
 
         if (!response.ok) {
@@ -1259,7 +1259,7 @@ if (registerForm) {
 
                 const response =
                     await fetch(
-                        "0/api/register",
+                        "/api/register",
                         {
                             method: "POST",
 
@@ -1374,7 +1374,7 @@ if (loginForm) {
 
                 const response =
                     await fetch(
-                        "0/api/login",
+                        "/api/login",
                         {
                             method: "POST",
 
@@ -1539,7 +1539,7 @@ if (createLibrarianForm) {
 
                 const response =
                     await fetch(
-                        "0/api/admin/create-librarian",
+                        "/api/admin/create-librarian",
                         {
                             method: "POST",
 
@@ -1621,7 +1621,7 @@ async function loadAdminStats() {
     try {
 
         const response = await fetch(
-            "0/api/admin/stats"
+            "/api/admin/stats"
         );
 
         const data = await response.json();
@@ -1660,7 +1660,7 @@ async function loadLibrarianStats() {
     try {
 
         const response = await fetch(
-            "0/api/admin/stats"
+            "/api/admin/stats"
         );
 
         const data = await response.json();
@@ -1698,7 +1698,7 @@ async function loadLibrarianResources() {
     try {
 
         const response = await fetch(
-            "0/api/resources"
+            "/api/resources"
         );
 
         const data = await response.json();
@@ -1812,7 +1812,7 @@ async function loadLibraryResources() {
     try {
 
         const response = await fetch(
-            "0/api/resources"
+            "/api/resources"
         );
 
         const data = await response.json();
@@ -2025,7 +2025,7 @@ async function loadResourceDetails() {
     try {
 
         const response = await fetch(
-            "0/api/resources"
+            "/api/resources"
         );
 
         const data = await response.json();
