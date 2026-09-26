@@ -41,12 +41,7 @@ function searchLibrary() {
 
 /* ================= FILTER LIBRARY ================= */
 
-if (!databaseResources || databaseResources.length === 0) {
-    loadLibraryResources();
-    return;
-}
-
-function filterLibrary() {
+async function filterLibrary() {
 
     const resourceGrid =
         document.getElementById("resourceGrid");
@@ -70,6 +65,16 @@ function filterLibrary() {
         return;
     }
 
+    /* ================= LOAD RESOURCES ================= */
+
+    if (
+        !databaseResources ||
+        databaseResources.length === 0
+    ) {
+        await loadLibraryResources();
+    }
+
+    /* ================= SEARCH VALUES ================= */
 
     const searchText =
         searchInput
@@ -80,25 +85,26 @@ function filterLibrary() {
 
     const selectedCategory =
         categoryFilter
-            ? categoryFilter.value.toLowerCase().trim()
+            ? categoryFilter.value
+                .toLowerCase()
+                .trim()
             : "all";
 
     const selectedLanguage =
         languageFilter
-            ? languageFilter.value.toLowerCase().trim()
+            ? languageFilter.value
+                .toLowerCase()
+                .trim()
             : "all";
 
     const selectedType =
         typeFilter
-            ? typeFilter.value.toLowerCase().trim()
+            ? typeFilter.value
+                .toLowerCase()
+                .trim()
             : "all";
 
-
     /* ================= FILTER RESOURCES ================= */
-
-console.log("FILTER START");
-console.log("Search:", searchText);
-console.log("Resources:", databaseResources.length);
 
     const filteredResources =
         databaseResources.filter(
@@ -106,15 +112,18 @@ console.log("Resources:", databaseResources.length);
 
                 const title =
                     (resource.title || "")
-                        .toLowerCase();
+                        .toLowerCase()
+                        .trim();
 
                 const author =
                     (resource.author || "")
-                        .toLowerCase();
+                        .toLowerCase()
+                        .trim();
 
                 const description =
                     (resource.description || "")
-                        .toLowerCase();
+                        .toLowerCase()
+                        .trim();
 
                 const category =
                     (resource.category || "")
@@ -131,66 +140,63 @@ console.log("Resources:", databaseResources.length);
                         .toLowerCase()
                         .trim();
 
-
-                /* SEARCH */
+                /* ================= SEARCH ================= */
 
                 const matchesSearch =
-                    !searchText ||
+                    searchText === "" ||
                     title.includes(searchText) ||
                     author.includes(searchText) ||
                     description.includes(searchText);
 
-
-                /* CATEGORY */
+                /* ================= CATEGORY ================= */
 
                 let matchesCategory = true;
 
                 if (selectedCategory !== "all") {
 
-                    matchesCategory =
-                        category === selectedCategory;
-
-                    /*
-                       Career & Jobs
-                    */
-
                     if (
-                        selectedCategory === "career" &&
-                        category === "career & jobs"
+                        selectedCategory === "career"
                     ) {
-                        matchesCategory = true;
-                    }
 
-                    /*
-                       Competitive Exams
-                    */
+                        matchesCategory =
+                            category === "career" ||
+                            category === "career & jobs";
 
-                    if (
-                        selectedCategory === "competitive" &&
-                        category === "competitive exams"
+                    } else if (
+                        selectedCategory === "competitive"
                     ) {
-                        matchesCategory = true;
+
+                        matchesCategory =
+                            category === "competitive" ||
+                            category === "competitive exams";
+
+                    } else {
+
+                        matchesCategory =
+                            category === selectedCategory;
+
                     }
 
                 }
 
-
-                /* LANGUAGE */
+                /* ================= LANGUAGE ================= */
 
                 const matchesLanguage =
                     selectedLanguage === "all" ||
                     language === selectedLanguage;
 
-
-                /* RESOURCE TYPE */
+                /* ================= RESOURCE TYPE ================= */
 
                 let matchesType = true;
 
                 if (selectedType !== "all") {
 
-                    if (selectedType === "ebook") {
+                    if (
+                        selectedType === "ebook"
+                    ) {
 
                         matchesType =
+                            type === "ebook" ||
                             type === "e-book";
 
                     } else if (
@@ -198,7 +204,8 @@ console.log("Resources:", databaseResources.length);
                     ) {
 
                         matchesType =
-                            type === "notes";
+                            type === "notes" ||
+                            type === "study notes";
 
                     } else if (
                         selectedType === "magazine"
@@ -214,10 +221,14 @@ console.log("Resources:", databaseResources.length);
                         matchesType =
                             type === "newspaper";
 
+                    } else {
+
+                        matchesType =
+                            type === selectedType;
+
                     }
 
                 }
-
 
                 return (
                     matchesSearch &&
@@ -229,11 +240,9 @@ console.log("Resources:", databaseResources.length);
             }
         );
 
-
     /* ================= DISPLAY ================= */
 
     resourceGrid.innerHTML = "";
-
 
     filteredResources.forEach(
         function(resource) {
@@ -243,7 +252,6 @@ console.log("Resources:", databaseResources.length);
 
             card.className =
                 "resource-card";
-
 
             card.innerHTML = `
 
@@ -300,12 +308,10 @@ console.log("Resources:", databaseResources.length);
 
             `;
 
-
             resourceGrid.appendChild(card);
 
         }
     );
-
 
     /* ================= RESOURCE COUNT ================= */
 
@@ -326,22 +332,14 @@ console.log("Resources:", databaseResources.length);
 
     }
 
-
     /* ================= NO RESULTS ================= */
 
     if (noResults) {
 
-        if (filteredResources.length === 0) {
-
-            noResults.style.display =
-                "block";
-
-        } else {
-
-            noResults.style.display =
-                "none";
-
-        }
+        noResults.style.display =
+            filteredResources.length === 0
+                ? "block"
+                : "none";
 
     }
 
@@ -1165,50 +1163,311 @@ let databaseResources = [];
 
 /* ================= LOAD DATABASE RESOURCES ================= */
 
-async function loadLibraryResources() {
+/* ================= FILTER LIBRARY ================= */
 
-    try {
+async function filterLibrary() {
 
-        const response =
-            await fetch(
-                "/api/resources"
-            );
+    const resourceGrid =
+        document.getElementById("resourceGrid");
 
-        if (!response.ok) {
+    const noResults =
+        document.getElementById("noResults");
 
-            throw new Error(
-                "Unable to load resources."
-            );
+    const searchInput =
+        document.getElementById("librarySearch");
 
-        }
+    const categoryFilter =
+        document.getElementById("categoryFilter");
 
-        const data =
-            await response.json();
+    const languageFilter =
+        document.getElementById("languageFilter");
 
-        databaseResources =
-            data.resources || [];
+    const typeFilter =
+        document.getElementById("typeFilter");
 
-        console.log(
-            "Resources loaded from database:",
-            databaseResources
+    if (!resourceGrid) {
+        return;
+    }
+
+    /* ================= LOAD RESOURCES ================= */
+
+    if (
+        !databaseResources ||
+        databaseResources.length === 0
+    ) {
+        await loadLibraryResources();
+    }
+
+    /* ================= SEARCH VALUES ================= */
+
+    const searchText =
+        searchInput
+            ? searchInput.value
+                .toLowerCase()
+                .trim()
+            : "";
+
+    const selectedCategory =
+        categoryFilter
+            ? categoryFilter.value
+                .toLowerCase()
+                .trim()
+            : "all";
+
+    const selectedLanguage =
+        languageFilter
+            ? languageFilter.value
+                .toLowerCase()
+                .trim()
+            : "all";
+
+    const selectedType =
+        typeFilter
+            ? typeFilter.value
+                .toLowerCase()
+                .trim()
+            : "all";
+
+    /* ================= FILTER RESOURCES ================= */
+
+    const filteredResources =
+        databaseResources.filter(
+            function(resource) {
+
+                const title =
+                    (resource.title || "")
+                        .toLowerCase()
+                        .trim();
+
+                const author =
+                    (resource.author || "")
+                        .toLowerCase()
+                        .trim();
+
+                const description =
+                    (resource.description || "")
+                        .toLowerCase()
+                        .trim();
+
+                const category =
+                    (resource.category || "")
+                        .toLowerCase()
+                        .trim();
+
+                const language =
+                    (resource.language || "")
+                        .toLowerCase()
+                        .trim();
+
+                const type =
+                    (resource.resource_type || "")
+                        .toLowerCase()
+                        .trim();
+
+                /* ================= SEARCH ================= */
+
+                const matchesSearch =
+                    searchText === "" ||
+                    title.includes(searchText) ||
+                    author.includes(searchText) ||
+                    description.includes(searchText);
+
+                /* ================= CATEGORY ================= */
+
+                let matchesCategory = true;
+
+                if (selectedCategory !== "all") {
+
+                    if (
+                        selectedCategory === "career"
+                    ) {
+
+                        matchesCategory =
+                            category === "career" ||
+                            category === "career & jobs";
+
+                    } else if (
+                        selectedCategory === "competitive"
+                    ) {
+
+                        matchesCategory =
+                            category === "competitive" ||
+                            category === "competitive exams";
+
+                    } else {
+
+                        matchesCategory =
+                            category === selectedCategory;
+
+                    }
+
+                }
+
+                /* ================= LANGUAGE ================= */
+
+                const matchesLanguage =
+                    selectedLanguage === "all" ||
+                    language === selectedLanguage;
+
+                /* ================= RESOURCE TYPE ================= */
+
+                let matchesType = true;
+
+                if (selectedType !== "all") {
+
+                    if (
+                        selectedType === "ebook"
+                    ) {
+
+                        matchesType =
+                            type === "ebook" ||
+                            type === "e-book";
+
+                    } else if (
+                        selectedType === "notes"
+                    ) {
+
+                        matchesType =
+                            type === "notes" ||
+                            type === "study notes";
+
+                    } else if (
+                        selectedType === "magazine"
+                    ) {
+
+                        matchesType =
+                            type === "magazine";
+
+                    } else if (
+                        selectedType === "newspaper"
+                    ) {
+
+                        matchesType =
+                            type === "newspaper";
+
+                    } else {
+
+                        matchesType =
+                            type === selectedType;
+
+                    }
+
+                }
+
+                return (
+                    matchesSearch &&
+                    matchesCategory &&
+                    matchesLanguage &&
+                    matchesType
+                );
+
+            }
         );
 
-        // If this is the Digital Library page,
-        // display the resources.
-        if (
-            document.getElementById("resourceGrid")
-        ) {
+    /* ================= DISPLAY ================= */
 
-            filterLibrary();
+    resourceGrid.innerHTML = "";
+
+    filteredResources.forEach(
+        function(resource) {
+
+            const card =
+                document.createElement("div");
+
+            card.className =
+                "resource-card";
+
+            card.innerHTML = `
+
+                <div class="resource-card-content">
+
+                    <div class="resource-card-cover">
+                        📚
+                    </div>
+
+                    <span class="resource-category">
+                        ${resource.category || "General"}
+                    </span>
+
+                    <h3>
+                        ${resource.title || "Untitled Resource"}
+                    </h3>
+
+                    <p>
+                        By ${resource.author || "Unknown"}
+                    </p>
+
+                    <p>
+                        ${resource.description || "Digital learning resource."}
+                    </p>
+
+                    <div class="resource-meta">
+
+                        <span>
+                            🌐 ${resource.language || "N/A"}
+                        </span>
+
+                        <span>
+                            📄 ${resource.resource_type || "N/A"}
+                        </span>
+
+                        <span>
+                            📅 ${resource.publication_year || "N/A"}
+                        </span>
+
+                    </div>
+
+                    <div class="resource-actions">
+
+                        <a
+                            href="book-details.html?id=${resource.id}"
+                            class="btn"
+                        >
+                            Read
+                        </a>
+
+                    </div>
+
+                </div>
+
+            `;
+
+            resourceGrid.appendChild(card);
 
         }
+    );
 
-    } catch (error) {
+    /* ================= RESOURCE COUNT ================= */
 
-        console.error(
-            "Database resource error:",
-            error
+    const resourceCount =
+        document.getElementById(
+            "libraryResourceCount"
         );
+
+    if (resourceCount) {
+
+        resourceCount.textContent =
+            filteredResources.length +
+            (
+                filteredResources.length === 1
+                    ? " Resource"
+                    : " Resources"
+            );
+
+    }
+
+    /* ================= NO RESULTS ================= */
+
+    if (noResults) {
+
+        noResults.style.display =
+            filteredResources.length === 0
+                ? "block"
+                : "none";
+
+    }
+
+}
 
         // Only filter if the library page exists
         if (
