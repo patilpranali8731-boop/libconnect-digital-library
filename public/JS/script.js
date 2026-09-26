@@ -898,6 +898,61 @@ if (addResourceForm) {
             const description =
                 document.getElementById("resourceDescription").value.trim();
 
+            const pdfFile =
+                document.getElementById("resourceFile").files[0];
+
+
+            // Check required fields
+            if (
+                !title ||
+                !category ||
+                !language ||
+                !resourceType
+            ) {
+
+                alert(
+                    "Please fill all required fields."
+                );
+
+                return;
+            }
+
+
+            // Check PDF file
+            if (!pdfFile) {
+
+                alert(
+                    "Please select a PDF file."
+                );
+
+                return;
+            }
+
+
+            // Create FormData
+            const formData = new FormData();
+
+            formData.append("title", title);
+            formData.append("author", author);
+            formData.append("category", category);
+            formData.append("language", language);
+            formData.append(
+                "publication_year",
+                publicationYear
+            );
+            formData.append(
+                "resource_type",
+                resourceType
+            );
+            formData.append(
+                "description",
+                description
+            );
+            formData.append(
+                "pdf",
+                pdfFile
+            );
+
 
             try {
 
@@ -905,25 +960,13 @@ if (addResourceForm) {
                     "/api/resources",
                     {
                         method: "POST",
-
-                        headers: {
-                            "Content-Type": "application/json"
-                        },
-
-                        body: JSON.stringify({
-                            title: title,
-                            author: author,
-                            category: category,
-                            language: language,
-                            publication_year: publicationYear,
-                            resource_type: resourceType,
-                            description: description
-                        })
+                        body: formData
                     }
                 );
 
 
-                const data = await response.json();
+                const data =
+                    await response.json();
 
 
                 if (data.status === "success") {
@@ -942,7 +985,9 @@ if (addResourceForm) {
 
                 } else {
 
-                    alert(data.message);
+                    alert(
+                        data.message
+                    );
 
                 }
 
@@ -954,15 +999,13 @@ if (addResourceForm) {
                 );
 
                 alert(
-                    "Unable to connect to the server.\n\n" +
-                    "Please make sure Flask is running."
+                    "Unable to connect to the server."
                 );
             }
 
         }
     );
 }
-
 
 /* =====================================================
    STEP 7 - ADMIN DASHBOARD
