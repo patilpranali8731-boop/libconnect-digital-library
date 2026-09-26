@@ -88,7 +88,12 @@ function filterLibrary() {
             ? typeFilter.value.toLowerCase().trim()
             : "all";
 
+
     /* ================= FILTER RESOURCES ================= */
+
+console.log("FILTER START");
+console.log("Search:", searchText);
+console.log("Resources:", databaseResources.length);
 
     const filteredResources =
         databaseResources.filter(
@@ -1160,12 +1165,16 @@ async function loadLibraryResources() {
     try {
 
         const response =
-            await fetch("/api/resources");
+            await fetch(
+                "/api/resources"
+            );
 
         if (!response.ok) {
+
             throw new Error(
                 "Unable to load resources."
             );
+
         }
 
         const data =
@@ -1175,14 +1184,18 @@ async function loadLibraryResources() {
             data.resources || [];
 
         console.log(
-            "Resources loaded:",
-            databaseResources.length
+            "Resources loaded from database:",
+            databaseResources
         );
 
+        // If this is the Digital Library page,
+        // display the resources.
         if (
             document.getElementById("resourceGrid")
         ) {
+
             filterLibrary();
+
         }
 
     } catch (error) {
@@ -1191,6 +1204,15 @@ async function loadLibraryResources() {
             "Database resource error:",
             error
         );
+
+        // Only filter if the library page exists
+        if (
+            document.getElementById("resourceGrid")
+        ) {
+
+            filterLibrary();
+
+        }
 
     }
 }
