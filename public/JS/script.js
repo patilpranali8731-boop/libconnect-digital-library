@@ -89,6 +89,11 @@ function filterLibrary() {
             : "all";
 
 
+    if (!databaseResources || databaseResources.length === 0) {
+    loadLibraryResources();
+    return;
+}
+
     /* ================= FILTER RESOURCES ================= */
 
     const filteredResources =
